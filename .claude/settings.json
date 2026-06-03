@@ -7,7 +7,8 @@
       "Write",
       "WebFetch",
       "WebSearch",
-      "Bash"
+      "Bash",
+      "Edit(.claude/agents/**/notes.md)"
     ],
     "ask": [
       "Bash(git push --force:*)",
