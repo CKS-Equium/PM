@@ -16,9 +16,12 @@ straight to the issue and unblock the team. The team's first dogfood project.
 
 ## Current state
 
-Architecture & design approved (gate 2) on 2026-06-03; entering the **build** phase. Stack: Node
-backend (token-safe) serving a static SPA, polling GitHub every 20s. Next: Project Manager breaks
-the build into dependency-ordered tickets, then Senior Engineer implements (→ Juniors) → gate 3.
+**Build complete — gate 3 passed.** Tickets #5–#14 implemented and delivered as PR #15
+(10/10 unit tests pass; smoke-tested live: real API data, phaseConflict surfaced, read-only 405s).
+**PAUSED at operator's request** before the Test phase, so the operator can run the app locally
+first. Resume with `run-project team-pulse-dashboard` → Test (QA, gate 4) → Review → Release.
+QA focus flagged by build: needs-human end-to-end (needs a labelled test issue), in-progress event
+derivation, browser/UI verification.
 
 ## Decision log
 
