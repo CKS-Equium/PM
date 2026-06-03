@@ -27,4 +27,4 @@ contract PR — so it can later be audited whether the team acted on what it lea
 
 | Project | Date | Recommendations | Contract changes |
 |---------|------|-----------------|------------------|
-| _none yet_ | | | |
+| [team-pulse-dashboard](team-pulse-dashboard.md) | 2026-06-03 | 10 (7 notes applied; 3 skill + 1 settings + 1 contract-candidate routed) | 0 applied (1 candidate: security-engineer data-driven-UI checklist, pending 2nd-project proof) |

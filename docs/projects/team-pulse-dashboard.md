@@ -16,10 +16,11 @@ straight to the issue and unblock the team. The team's first dogfood project.
 
 ## Current state
 
-**SHIPPED — v0.1.0 released 2026-06-03.** All gates 1–6 passed; PR #15 merged to `main`, tagged
+**SHIPPED & CLOSED — v0.1.0, 2026-06-03.** All 7 gates passed; PR #15 merged to `main`, tagged
 [v0.1.0](https://github.com/CKS-Equium/team-pulse-dashboard/releases/tag/v0.1.0). 55/55 tests; CI
-workflow in place; runs locally (`npm install && npm start` → http://localhost:3000). Only gate 7
-(post-mortem) remains to formally close the project.
+in place; runs locally (`npm install && npm start` → http://localhost:3000). **Post-mortem (gate 7)
+recorded:** [docs/postmortems/team-pulse-dashboard.md](../postmortems/team-pulse-dashboard.md) — 10
+recommendations, lessons written to 7 agents' notes.md; skill/contract follow-ups recorded.
 
 ## Decision log
 
@@ -40,6 +41,9 @@ workflow in place; runs locally (`npm install && npm start` → http://localhost
   role-label active-role, `status:in-progress` detection); security re-review PASS, 55/55 tests.
 - 2026-06-03 — **Gate 6 (release) approved & shipped v0.1.0.** PR #15 merged to main; release tagged.
   GitHub `Closes #5, #6, …` only auto-closed #5 (single-keyword-comma-list gotcha) — rest closed manually.
+- 2026-06-03 — **Gate 7 (post-mortem) recorded — project CLOSED.** Self + 360 reviews; lessons → 7
+  agents' notes.md; 10 recommendations (skill fixes to start-project, QA self-contained tests, a
+  security-checklist contract candidate). Gates first-try 5/7; 0 defects escaped to v0.1.0.
 
 ## Gate waivers
 
