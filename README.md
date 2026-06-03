@@ -43,10 +43,10 @@ docs/
 
 ## Status
 
-Rev 1 — architecture, scaffolding, and all **15 persona contracts** (`.claude/agents/<role>/`,
-each `persona.md` + `notes.md`) are in place. Next: the `start-project` kickoff skill and the
-lifecycle/gate orchestration that drives the team, then the first dogfood project (a status
-dashboard). See [DESIGN.md §9](docs/DESIGN.md) for the build order.
+Rev 1 — architecture, scaffolding, all **15 persona contracts** (`.claude/agents/<role>/`, each
+`persona.md` + `notes.md`), and the **`start-project`** kickoff skill are in place. Next: the
+lifecycle/gate orchestration that drives the team through the phases, then the first dogfood
+project (a status dashboard). See [DESIGN.md §9](docs/DESIGN.md) for the build order.
 
 ## Requirements
 
