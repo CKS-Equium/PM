@@ -2,7 +2,7 @@
 slug: team-pulse-dashboard
 repo: https://github.com/CKS-Equium/team-pulse-dashboard
 status: active
-phase: build
+phase: release
 created: 2026-06-03
 team: [orchestrator, product-manager, software-architect, ux-designer, ui-designer]
 board: n/a
@@ -34,6 +34,12 @@ derivation, browser/UI verification.
 - 2026-06-03 — **Gate 2 approved.** Stack = Node backend serving a static SPA; token lives only in
   the backend; server polls GitHub every 20s (ETag + back-off). Phase: registry authoritative
   (conflict flagged). `needs-human`: label-only detection. Initial log window: 24h / 100 events.
+- 2026-06-03 — **Gate 3 (build) passed:** tickets #5–#14 delivered as PR #15; runs locally.
+- 2026-06-03 — **Gate 4 (test) passed:** QA test plan + suite 46→55 tests, all ACs mapped.
+- 2026-06-03 — **Gate 5 (review) passed after a fix loop.** Security BLOCKed on a HIGH (`javascript:`
+  URL XSS sink); Reviewer flagged a false phase-conflict badge + wrong active-role. Engineer fixed
+  all (safeUrl https-allowlist, CSP/headers, loopback bind, open-issue-only milestone resolution,
+  role-label active-role, `status:in-progress` detection); security re-review PASS, 55/55 tests.
 
 ## Gate waivers
 
