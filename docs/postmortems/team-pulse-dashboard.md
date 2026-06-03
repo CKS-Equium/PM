@@ -175,18 +175,25 @@
 | #9 | Notes appended to product-manager | `.claude/agents/product-manager/notes.md` |
 | #10 | Notes appended to software-architect | `.claude/agents/software-architect/notes.md` |
 
-### Routed follow-ups requiring the gated path (NOT applied in this pass)
+### Routed follow-ups requiring the gated path — ✅ APPLIED 2026-06-03 (human-approved)
 
-These are skill and persona-contract changes and are recorded here as proposals only — skill files
-and `persona.md` contracts are not edited by the Process Engineer in a post-mortem pass:
+The operator approved applying all recommendations, which is the human side of the contract gate
+(DESIGN §5). Applied:
 
-- **Skill: start-project** (Orchestrator-owned) — recs #1, #2, #3: live interview in main thread;
-  gate-1-before-repo ordering; auto-register new project dir in `settings.local.json`.
-- **Skill: smart-pull-request / smart-merge** (DevOps-owned) — rec #4: one closing keyword per
-  issue, or close-on-merge.
-- **Contract candidate: security-engineer `persona.md`** — rec #8: promote the data-driven-web-UI
-  checklist once proven across a second project (via reviewed PR).
-- **Project follow-up (team-pulse-dashboard repo)** — rec #5: self-contained contract-test harness.
+- ✅ **Skill: start-project** (recs #1, #2, #3) — rewritten: live interview in the main thread;
+  gate-1-before-repo ordering; auto-registers each new project dir in `settings.local.json`; plus
+  the closing-keyword convention. *(control-plane merge "apply post-mortem recommendations")*
+- ✅ **Skill: smart-pull-request** (rec #4) — one-closing-keyword-per-issue rule added.
+- ✅ **Contract: security-engineer `persona.md`** (rec #8) — data-driven-web-UI security checklist
+  promoted into the contract (human approved the gate, overriding the "wait for a 2nd project"
+  caution).
+- ✅ **Project: team-pulse-dashboard** (rec #5) — contract tests refactored to own their server
+  lifecycle; CI simplified; 55/55 pass with no external server. *(merged to project `main`)*
+- ✅ **gates.md** — `needs-human` async-escalation mechanism documented.
+
+**Still open (forward feature, not a fix):** the `needs-human` **scheduled-resume cron routine**
+(via the `schedule` skill) — convention adopted, auto-resume not yet built; escalations checked
+manually until then.
 
 ## 5. Metrics (signal)
 
