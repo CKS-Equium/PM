@@ -23,7 +23,8 @@ tiering.
 
 ## Contract template
 
-New personas start from [`_persona-template.md`](_persona-template.md).
+New personas start from [`docs/templates/persona-template.md`](../../docs/templates/persona-template.md).
+(The template lives under `docs/templates/`, not here, so it isn't loaded as a real agent.)
 
 ## The 15 roles
 

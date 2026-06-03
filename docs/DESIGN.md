@@ -84,7 +84,7 @@ docs/
 
 `persona.md` carries Claude Code frontmatter (`name`, `description`, `tools`, `model`) plus:
 **Mission · Perspective · Owns · Does NOT do · Inputs · Outputs · Handoffs · Definition of
-Done · Escalation · Tools/permissions.** Template: [.claude/agents/_persona-template.md](../.claude/agents/_persona-template.md).
+Done · Escalation · Tools/permissions.** Template: [docs/templates/persona-template.md](templates/persona-template.md).
 
 ## 5. Self-improvement (recursive)
 
@@ -151,9 +151,11 @@ Set per agent via the `model:` frontmatter; tunable per project.
 ## 9. Build order
 
 1. **Scaffold** — this design doc + ORG, gates, templates, registry, post-mortem skeleton. *(done)*
-2. **Personas** — the 15 `persona.md` contracts + empty `notes.md`.
-3. **Orchestration** — the `start-project` skill + the lifecycle/gate skill that ties roles together.
-4. **Project spin-up** — repo creation, registry, GitHub issue seeding.
+2. **Personas** — the 15 `persona.md` contracts + empty `notes.md`. *(done)*
+3. **Orchestration** — `start-project` (kickoff) + `run-project` (lifecycle/gate) + `run-postmortem`
+   (closing gate). *(done)*
+4. **Project spin-up & visibility** — repo/registry/issue seeding (in `start-project`) +
+   `project-status` (portfolio view + registry-index regeneration). *(done)*
 5. **First project** — build the dashboard (dogfood), then run a real post-mortem.
 
 ## 10. Dependencies
