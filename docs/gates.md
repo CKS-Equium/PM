@@ -27,6 +27,17 @@ hard-to-reverse decisions:
 2. **Architecture approval** (gate 2) — the expensive-to-undo decision.
 3. **Release** (gate 6) — the irreversible, outward-facing action.
 
+### Async escalation (`needs-human`)
+
+Outside the three gates, any agent that needs a human decision opens a **GitHub issue labelled
+`needs-human`** in the project repo, assigned to the operator, and the work waits. The operator
+answers **in the issue**; an always-on scheduled Orchestrator routine (~5 min) detects the answer
+and resumes the agent. This keeps escalation **durable and asynchronous** (it survives session
+restarts) rather than blocking on a live prompt. The dashboard's "Needs you" panel surfaces these.
+
+*Status: the convention is adopted; the scheduled-resume routine is an orchestration build still to
+come (a `schedule`-skill cron job) — until then, escalations are checked manually.*
+
 ## Gate discipline
 
 - **Never** pass a gate with its DoD unmet unless explicitly waived (with logged reason).
