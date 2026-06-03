@@ -1,95 +1,63 @@
-# Smart Git Skills for Claude Code
+# PM — Autonomous Multi-Agent Project Management Team
 
-A collection of [Claude Code](https://claude.com/claude-code) skills that turn an
-end-to-end git workflow into intelligent, conventional commands. Describe what you want in
-plain English ("start working on a YAML parser", "save my work", "create a PR") and the
-matching skill runs the right git/`gh` commands with safety checks, conventional naming, and
-quality gates.
+An autonomous software-project-management **team**, built as a set of role-based
+[Claude Code](https://claude.com/claude-code) agents with strict, non-overlapping scopes. Describe
+what you want to build, and the team runs it: discovery → design → build → test → review →
+release → post-mortem — generating the plan, requirements, architecture, design, code, tests, and
+docs along the way, and getting measurably better with every project.
 
-These are **skill definitions**, not an application — there is nothing to build or run. Claude
-Code loads each `SKILL.md` and follows it as a procedure.
+> **This repo is the team, not a project.** Each project the team executes lives in its own
+> separate GitHub repo. → Read **[docs/DESIGN.md](docs/DESIGN.md)** for the full blueprint.
 
-## The skills
+## How it works
 
-| Skill | Purpose |
-|-------|---------|
-| **smart-status** | Workflow hub — repo overview, branch navigation, suggests the next action. |
-| **smart-branch** | Create a branch with conventional `<type>/<description>` naming from your intent. |
-| **smart-save** | Quick WIP checkpoint commit pushed to remote (end-of-day / context-switch backup). |
-| **smart-commit** | Reorganize changes into atomic, conventional commits grouped by concern. |
-| **smart-pull-request** | Quality gates → push → auto-generate PR description → `gh pr create` → watch CI. |
-| **smart-merge** | Branch detection, sync, merge/rebase/squash strategies, conflict guidance. |
-| **smart-cleanup** | Find and delete merged, stale, and orphaned branches (local + remote). |
-
-They chain into a lifecycle:
-
-```
-smart-status → smart-branch → …work… → smart-save → smart-commit → smart-pull-request → smart-merge → smart-cleanup
-```
-
-## Usage
-
-With Claude Code running in your project, invoke a skill by describing the task or naming it:
-
-- "smart status" / "what's going on" / "show branches"
-- "start new work on adding YAML support"
-- "save my work — end of day"
-- "smart commit" / "organize my commits"
-- "create a PR" / "smart pr"
-- "smart merge target=develop strategy=squash"
-- "clean up merged branches" / "smart cleanup --dry-run"
-
-Each skill's `## Invocation` section lists the phrases that trigger it, and `## Workflow`
-documents exactly what it does.
-
-## Requirements
-
-- **Claude Code** (the skills run inside it).
-- **git**.
-- **[GitHub CLI](https://cli.github.com/) (`gh`)**, authenticated (`gh auth login`) — required
-  by `smart-pull-request`; optional for `smart-status` (used to list PRs).
-
-The quality-gate steps in `smart-pull-request` and `smart-merge` invoke your project's own
-linters/type-checkers/test runners (e.g. `ruff`/`pytest` or `npm run lint`/`npm test`); they
-are templates, not bundled tools.
-
-## Installation
-
-Copy (or symlink) the skill directories into the `.claude/skills/` of any project, or keep
-them in a project-level / user-level Claude Code skills directory:
-
-```sh
-cp -r .claude/skills/* <your-project>/.claude/skills/
-```
+- **Control plane / data plane.** This repo is the reusable team (personas, skills, templates,
+  accumulated learning). Each project gets its **own GitHub repo**, created on demand; this repo
+  keeps only a registry entry linking to it.
+- **15 roles, hierarchical delegation.** Human → Orchestrator → leads → workers. See the
+  [org chart](docs/ORG.md). Quality, review, and security report independently; a Process Engineer
+  continuously improves the team.
+- **Strict scope via artifacts.** Each agent reads named inputs and writes named outputs
+  ([templates](docs/templates/)), and can't touch what it doesn't own.
+- **GitHub-native state.** Tickets are Issues, the board is a GitHub Project, phases are
+  Milestones, handoffs are comments, deliveries are PRs.
+- **Gated, with humans at the big calls.** Explicit [gates](docs/gates.md) between phases; a human
+  signs off at PRD, architecture, and release only.
+- **Recursive self-improvement.** Agents keep a `notes.md` playbook; a post-mortem (self-review +
+  360 review) after every project feeds improvements back into the team — audited in git.
 
 ## Repository layout
 
 ```
 .claude/
-  settings.json            # permissions allowlist
-  skills/
-    smart-status/SKILL.md
-    smart-branch/SKILL.md
-    smart-save/SKILL.md
-    smart-commit/SKILL.md
-    smart-pull-request/SKILL.md
-    smart-merge/SKILL.md
-    smart-cleanup/SKILL.md
+  agents/<role>/   persona.md (contract) + notes.md (playbook)
+  skills/          workflow skills, incl. the git lifecycle skills
+docs/
+  DESIGN.md        authoritative blueprint (start here)
+  ORG.md           org chart
+  gates.md         phase gates, Definition of Done, human approval points
+  templates/       PRD · ADR · ticket · test-plan · UX/UI spec
+  projects/        project registry (one entry per project)
+  postmortems/     360-review reports
 ```
 
-## Adding a skill
+## Status
 
-Create `.claude/skills/<name>/SKILL.md` starting with YAML frontmatter, then follow the
-structure used by the existing skills. See [CLAUDE.md](CLAUDE.md) for the authoring
-conventions (frontmatter, phase layout, conventional commits, explicit staging, protected
-branches).
+Rev 1 — architecture and scaffolding are in place. Next: author the 15 persona contracts, then the
+`start-project` kickoff skill, then the team's first dogfood project (a status dashboard). See
+[DESIGN.md §9](docs/DESIGN.md) for the build order.
 
-```markdown
----
-name: <kebab-case-name>
-description: <what it does + when to use it>
----
+## Requirements
 
-# <Name> Skill
-...
-```
+- **Claude Code** (the runtime the agents run in).
+- **git**.
+- **[GitHub CLI](https://cli.github.com/) (`gh`)**, authenticated — for project-repo creation,
+  Issues, GitHub Projects, and PRs.
+
+Per-project tooling (linters, test runners, etc.) is supplied by each project, not this repo.
+
+## The git lifecycle skills
+
+`.claude/skills/` holds seven chained git-workflow skills — `smart-status`, `smart-branch`,
+`smart-save`, `smart-commit`, `smart-pull-request`, `smart-merge`, `smart-cleanup` — which form
+the DevOps / Release Engineer's toolkit and are usable standalone in any repo.

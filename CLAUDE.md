@@ -4,70 +4,82 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-This repository is a collection of **Claude Code skills** — not application code. Each skill
-is a Markdown workflow definition that teaches Claude an intelligent, conventional git
-operation. The "product" is the prose in each `SKILL.md`; there is nothing to build, compile,
-or run. Skills are consumed by Claude Code at runtime, which reads the frontmatter to decide
-when a skill applies and follows the body as a procedure.
+This repository is the **control plane for an autonomous, multi-agent software-project-management
+team** — not application code, and not any single project. It defines a team of 15 role-based
+agents (with strict, non-overlapping scopes) that can take a software project from a plain-English
+intent through discovery, design, build, test, review, release, and a self-improvement
+post-mortem. The "product" is the team: the persona contracts, skills, artifact templates, and the
+accumulating learning.
 
-The seven skills form a cohesive git lifecycle that reference and chain into one another:
+**Read [docs/DESIGN.md](docs/DESIGN.md) first — it is the single source of truth.** This file is
+an orientation; DESIGN.md is authoritative, with [docs/ORG.md](docs/ORG.md) (org chart) and
+[docs/gates.md](docs/gates.md) (lifecycle gates) as the other primary references.
 
-```
-smart-status ──▶ smart-branch ──▶ (work) ──▶ smart-save ──▶ smart-commit ──▶ smart-pull-request ──▶ smart-merge ──▶ smart-cleanup
-   (hub)            (start)                   (checkpoint)    (organize)        (PR + CI)              (integrate)      (tidy up)
-```
+### The core idea: control plane vs data plane
 
-- **smart-status** — workflow hub: repo overview, branch navigation, suggests the next skill.
-- **smart-branch** — create a branch with conventional `<type>/<desc>` naming from a plain-English intent.
-- **smart-save** — WIP checkpoint commit (`wip:` prefix, `git add -A`) pushed to remote for backup.
-- **smart-commit** — reorganize working-tree changes into atomic, conventional commits by concern.
-- **smart-pull-request** — quality gates (lint/types/tests/build) → push → generate PR body → `gh pr create` → CI watch.
-- **smart-merge** — branch detection, sync, merge/rebase/squash strategies, conflict-resolution guidance.
-- **smart-cleanup** — categorize and delete merged/stale/gone branches, local and remote.
+- **Control plane = this repo.** The reusable team + everything it has learned.
+- **Data plane = a separate GitHub repo per project**, created on demand with `gh repo create`,
+  living *outside* this repo's tree. This repo tracks only a metadata **registry** entry per
+  project under `docs/projects/`. Never nest a project's git repo inside this one.
+
+Durable lessons flow back into the control plane (agents' `notes.md`); project-specific context
+stays in the project repo.
 
 ## Repository layout
 
 ```
 .claude/
-  settings.json          # permissions allowlist for this project
-  skills/<name>/SKILL.md  # one directory per skill; the SKILL.md IS the skill
+  agents/<role>/
+    persona.md     # CONTRACT — mission, scope, does-NOT. Stable, REVIEW-GATED.
+    notes.md       # PLAYBOOK — heuristics the agent self-appends FREELY.
+  skills/          # workflow skills, incl. the existing git lifecycle skills
+  settings.json    # permissions allowlist
+docs/
+  DESIGN.md        # authoritative blueprint (read first)
+  ORG.md           # org chart + reporting principles
+  gates.md         # phase gates, Definition of Done, human approval points
+  templates/       # artifact templates (PRD, ADR, ticket, test-plan, UX/UI spec)
+  projects/        # project registry (one <slug>.md per project + index)
+  postmortems/     # one 360-review report per completed project
 ```
 
-## SKILL.md authoring conventions
+## Working conventions
 
-When adding or editing a skill, match the established structure — the existing files are the
-spec. Key conventions enforced across the set:
+- **Scope is enforced by artifacts + handoffs.** Each agent reads named inputs and writes named
+  outputs, and must not edit artifacts it doesn't own. A role's authoritative scope is its
+  `persona.md`; until that exists, DESIGN.md §3 governs.
+- **Two-file agents.** `notes.md` is freely self-edited; `persona.md` (the contract) changes
+  **only via a reviewed PR** — convention + Reviewer/human approval, no enforcement hook.
+- **Model tiering** (DESIGN.md §8): Opus for the six senior/judgment roles, Sonnet for the mid
+  tier, Haiku for the Junior Engineer. Set per agent via `model:` frontmatter.
+- **Human-in-the-loop** at exactly three gates: PRD approval, architecture approval, release
+  (gates.md). Autonomy runs free between them.
+- **Templates are the contracts between roles** — when changing what an agent produces/consumes,
+  update the matching template in `docs/templates/` so the handoff stays consistent.
+- **Cross-document consistency:** the roster, scopes, gates, model tiering, and lifecycle appear
+  in DESIGN.md, ORG.md, gates.md, and the per-role personas. A change in one usually needs
+  mirroring in the others.
 
-- **Frontmatter is mandatory.** Every `SKILL.md` must start with a YAML block containing
-  `name` (kebab-case, matching the directory) and `description`. The `description` is how
-  Claude decides relevance, so it must state *what* the skill does **and** *when to use it*
-  (e.g. "Use when starting new work, creating a branch...").
-- **Body structure:** Title → one-line summary → `## Workflow` broken into numbered Phases →
-  `## Rules` with `Never:` / `Always:` / `Prefer:` lists → `## Edge Cases` → `## Invocation`
-  (the natural-language phrases that trigger the skill).
-- **Explicit staging.** Skills must never use `git add .` / `git add -A` — stage files by name.
-  The one deliberate exception is `smart-save`, which uses `git add -A` for throwaway WIP
-  checkpoints and documents *why* inline.
-- **Conventional commits / branches** throughout: types are `feat`, `fix`, `docs`, `refactor`,
-  `perf`, `test`, `chore`, `ci`, `style`. Branches are `<type>/<kebab-desc>`; commit subjects
-  are imperative, lowercase, ≤72 chars, no trailing period.
-- **Protected branches** (`main`/`master`/`develop`) are never committed to directly or
-  deleted; destructive git operations require explicit user confirmation.
-- **Optional per-skill config:** several skills look for a dotfile (`.smartbranch.json`,
-  `.smartmerge.json`, `.smartcleanup.json`, etc.). These are conventions described in the
-  skills, not code that exists here.
+## The git lifecycle skills
 
-## Cross-skill consistency
+`.claude/skills/` contains seven chained git-workflow skills — `smart-status`, `smart-branch`,
+`smart-save`, `smart-commit`, `smart-pull-request`, `smart-merge`, `smart-cleanup`. Within the
+team these are the **DevOps / Release Engineer's** toolkit; standalone, they teach Claude
+conventional git operations. Authoring conventions for them:
 
-Because the skills chain together, a change in one often needs mirroring in others. Notably:
-the conventional type/branch vocabulary, the protected-branch list, the "suggest next skill"
-hand-offs (e.g. smart-status → smart-save/smart-commit, smart-merge → smart-cleanup), and the
-shared assumption that `gh` CLI is available for PR-related steps.
+- **Frontmatter is mandatory** (`name` kebab-case matching the directory, `description` stating
+  *what* + *when to use*).
+- **Body:** Title → summary → `## Workflow` (numbered Phases) → `## Rules` (`Never:`/`Always:`/
+  `Prefer:`) → `## Edge Cases` → `## Invocation`.
+- **Explicit staging** — never `git add .`/`-A` (the sole exception is `smart-save`'s documented
+  WIP checkpoint).
+- **Conventional commits/branches**: types `feat|fix|docs|refactor|perf|test|chore|ci|style`;
+  branches `<type>/<kebab-desc>`; subjects imperative, lowercase, ≤72 chars, no trailing period.
+- **Protected branches** (`main`/`master`/`develop`) are never committed to or deleted directly;
+  destructive git operations require explicit confirmation.
 
-## Tooling dependencies (runtime, not this repo)
+## Tooling dependencies (runtime)
 
-The workflows assume a developer environment with `git`, and `gh` (GitHub CLI, authenticated)
-for `smart-pull-request` and the PR view in `smart-status`. Quality-gate commands in the
-skills are written for both Python (`ruff`, `mypy`/`pyright`, `pytest`) and Node/TS (`npm run
-lint`, `tsc`, `npm test`) — they are templates the target project supplies, not tools this
-repo installs.
+`git`; `gh` (GitHub CLI, authenticated) for project-repo creation, issues, GitHub Projects, and
+PRs; Claude Code as the runtime. Per-project quality-gate tools (linters, type-checkers, test
+runners) are supplied by each project, not installed here.
