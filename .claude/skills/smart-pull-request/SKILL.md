@@ -272,6 +272,8 @@ Require user intervention:
 - Generate meaningful PR descriptions
 - Extract information from commits
 - Auto-check template items when possible
+- Use **one closing keyword per issue** when a PR closes several (`Closes #5\nCloses #6`) — a single
+  `Closes #5, #6, #7` closes only the first issue; the rest stay open
 
 ## Configuration
 
