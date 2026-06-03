@@ -1,7 +1,7 @@
 ---
 slug: team-pulse-dashboard
 repo: https://github.com/CKS-Equium/team-pulse-dashboard
-status: active
+status: shipped
 phase: release
 created: 2026-06-03
 team: [orchestrator, product-manager, software-architect, ux-designer, ui-designer]
@@ -16,12 +16,10 @@ straight to the issue and unblock the team. The team's first dogfood project.
 
 ## Current state
 
-**Build complete — gate 3 passed.** Tickets #5–#14 implemented and delivered as PR #15
-(10/10 unit tests pass; smoke-tested live: real API data, phaseConflict surfaced, read-only 405s).
-**PAUSED at operator's request** before the Test phase, so the operator can run the app locally
-first. Resume with `run-project team-pulse-dashboard` → Test (QA, gate 4) → Review → Release.
-QA focus flagged by build: needs-human end-to-end (needs a labelled test issue), in-progress event
-derivation, browser/UI verification.
+**SHIPPED — v0.1.0 released 2026-06-03.** All gates 1–6 passed; PR #15 merged to `main`, tagged
+[v0.1.0](https://github.com/CKS-Equium/team-pulse-dashboard/releases/tag/v0.1.0). 55/55 tests; CI
+workflow in place; runs locally (`npm install && npm start` → http://localhost:3000). Only gate 7
+(post-mortem) remains to formally close the project.
 
 ## Decision log
 
@@ -40,6 +38,8 @@ derivation, browser/UI verification.
   URL XSS sink); Reviewer flagged a false phase-conflict badge + wrong active-role. Engineer fixed
   all (safeUrl https-allowlist, CSP/headers, loopback bind, open-issue-only milestone resolution,
   role-label active-role, `status:in-progress` detection); security re-review PASS, 55/55 tests.
+- 2026-06-03 — **Gate 6 (release) approved & shipped v0.1.0.** PR #15 merged to main; release tagged.
+  GitHub `Closes #5, #6, …` only auto-closed #5 (single-keyword-comma-list gotcha) — rest closed manually.
 
 ## Gate waivers
 
