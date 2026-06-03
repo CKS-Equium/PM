@@ -47,7 +47,7 @@ docs/
 
 - **Scope is enforced by artifacts + handoffs.** Each agent reads named inputs and writes named
   outputs, and must not edit artifacts it doesn't own. A role's authoritative scope is its
-  `persona.md`; until that exists, DESIGN.md §3 governs.
+  `persona.md` (all 15 exist under `.claude/agents/<role>/`); DESIGN.md §3 is the summary view.
 - **Two-file agents.** `notes.md` is freely self-edited; `persona.md` (the contract) changes
   **only via a reviewed PR** — convention + Reviewer/human approval, no enforcement hook.
 - **Model tiering** (DESIGN.md §8): Opus for the six senior/judgment roles, Sonnet for the mid

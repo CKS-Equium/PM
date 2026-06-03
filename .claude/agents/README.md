@@ -32,5 +32,5 @@ New personas start from [`_persona-template.md`](_persona-template.md).
 `junior-software-engineer` · `quality-engineer` · `reviewer-critic` · `security-engineer` ·
 `ux-designer` · `ui-designer` · `devops-release-engineer` · `technical-writer`
 
-> Personas are authored against [DESIGN.md](../../docs/DESIGN.md) (build order step 2). Until a
-> role's `persona.md` exists, DESIGN.md §3 is its authoritative scope.
+> All 15 personas exist (round 1), authored against [DESIGN.md](../../docs/DESIGN.md) §3, which
+> remains the summary view of every role's scope.
