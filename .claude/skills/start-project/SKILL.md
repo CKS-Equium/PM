@@ -107,8 +107,9 @@ State lives in the **project** repo (see DESIGN §6).
   2. `Plan & break down into tickets` — `role:project-manager`, depends on #1.
 
   Do **not** pre-seed the whole backlog — the Project Manager grows it after architecture.
-- **Issue-closing convention:** when a PR closes multiple issues, use **one closing keyword per
-  issue** (`Closes #5\nCloses #6`), not a single `Closes #5, #6` (GitHub closes only the first).
+- **Issue-closing convention:** close delivered tickets **programmatically after merge** (a
+  `gh issue close` loop), not via PR-body `Closes #N` keywords — those are unreliable for multiple
+  issues (proven across two projects). Reference issues in the PR body for traceability only.
 
 ### Phase 7: Summary & handoff
 
