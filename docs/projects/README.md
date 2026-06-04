@@ -13,6 +13,7 @@ is the control-plane index of those projects — metadata and links only, never 
 
 | Project | Status | Phase | Repo |
 |---------|--------|-------|------|
-| [team-pulse-dashboard](team-pulse-dashboard.md) | active | design | [CKS-Equium/team-pulse-dashboard](https://github.com/CKS-Equium/team-pulse-dashboard) |
+| [team-pulse-dashboard](team-pulse-dashboard.md) | shipped | release | [CKS-Equium/team-pulse-dashboard](https://github.com/CKS-Equium/team-pulse-dashboard) |
+| [hearthflix](hearthflix.md) | active | design | [CKS-Equium/hearthflix](https://github.com/CKS-Equium/hearthflix) |
 
 <!-- Regenerate this table from the frontmatter of each <slug>.md (excluding _template.md). -->
