@@ -1,8 +1,8 @@
 ---
 slug: team-pulse-dashboard
 repo: https://github.com/CKS-Equium/team-pulse-dashboard
-status: active
-phase: build
+status: shipped
+phase: release
 created: 2026-06-03
 team: [orchestrator, product-manager, software-architect, ux-designer, ui-designer]
 board: n/a
@@ -16,12 +16,14 @@ straight to the issue and unblock the team. The team's first dogfood project.
 
 ## Current state
 
-**v1.1 iteration in progress (build phase), 2026-06-04.** v0.1.0 shipped + post-mortemed (below).
-v1.1 scope: the **activity log shows too little per comment** ("Comment on #N" with no content) —
-add a **comment snippet + author/role** (operator request). Small enhancement within the existing
-architecture, so the full design gate (2) is waived (see Gate waivers); the engineer handles the
-extra comment-body fetch within the existing ETag/rate-limit model and the Reviewer checks it.
-First run on the **upgraded team** (secure-by-default + validate-don't-assert contracts).
+**v1.1 SHIPPED — v0.2.0, 2026-06-04.** Activity log now shows a comment snippet + author/role
+(#16, PR #17). Gate 5 passed **first pass** (the upgraded secure-by-default contract worked — no
+fix loop on attacker-influenceable comment text); 64/64 tests; zero new API calls; #16 closed
+programmatically; gate 6 surfaced as a `needs-human` board item (#18) per the new convention.
+Light post-mortem: [docs/postmortems/team-pulse-dashboard-v1.1.md](../postmortems/team-pulse-dashboard-v1.1.md).
+
+> **v0.1.0 (shipped 2026-06-03):** all 7 gates passed; PR #15; 55/55 tests; CI; runs locally.
+> Post-mortem: [docs/postmortems/team-pulse-dashboard.md](../postmortems/team-pulse-dashboard.md).
 
 > **v0.1.0 (shipped 2026-06-03):** all 7 gates passed; PR #15; 55/55 tests; CI; runs locally.
 > Post-mortem: [docs/postmortems/team-pulse-dashboard.md](../postmortems/team-pulse-dashboard.md).
@@ -48,6 +50,10 @@ First run on the **upgraded team** (secure-by-default + validate-don't-assert co
 - 2026-06-03 — **Gate 7 (post-mortem) recorded — project CLOSED.** Self + 360 reviews; lessons → 7
   agents' notes.md; 10 recommendations (skill fixes to start-project, QA self-contained tests, a
   security-checklist contract candidate). Gates first-try 5/7; 0 defects escaped to v0.1.0.
+- 2026-06-04 — **v1.1 shipped (v0.2.0).** Comment-detail enhancement (#16, PR #17). Gate 2 waived
+  (proportional); gate 5 PASS first pass (upgraded secure-by-default contract validated — no fix
+  loop); 64/64; programmatic close; gate 6 raised `needs-human` #18 (Point 1 demoed). Light gate-7
+  retro confirms the applied contract/skill fixes work in practice.
 
 ## Gate waivers
 
