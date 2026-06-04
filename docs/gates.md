@@ -27,6 +27,10 @@ hard-to-reverse decisions:
 2. **Architecture approval** (gate 2) — the expensive-to-undo decision.
 3. **Release** (gate 6) — the irreversible, outward-facing action.
 
+Gates 2 and 6 (post-repo) are **raised as a `needs-human` issue on the project board** by the
+Orchestrator and closed on approval, so they appear in the dashboard's "Needs you" panel. (Gate 1
+is pre-repo — an interactive kickoff — so it has no board item.)
+
 ### Async escalation (`needs-human`)
 
 Outside the three gates, any agent that needs a human decision opens a **GitHub issue labelled
