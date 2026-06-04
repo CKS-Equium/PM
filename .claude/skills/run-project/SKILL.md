@@ -56,8 +56,10 @@ work concurrently (e.g. UX and UI specs), serialize dependencies (Plan needs the
 **Require progress narration** (DESIGN §6 "progress narration"): instruct each delegated agent to
 post a *start* comment on its issue **and set `status:in-progress`**, short *milestone/decision/
 blocker* comments as it works, and a **substantive done** comment (what changed + AC/PR refs) —
-not "done per PR". You (the Orchestrator) post **phase/gate-transition** comments on the relevant
-issues. Signal, not noise. This is what gives the dashboard a live story.
+not "done per PR". **Agents whose tools lack `gh` (designers, Researcher, Product/Technical Writer)
+return their narration text and you post it for them.** You (the Orchestrator) post
+**phase/gate-transition** comments on the relevant issues. Signal, not noise. This is what gives the
+dashboard a live story.
 
 ### Phase 2: Check the gate
 
@@ -75,7 +77,9 @@ Pause and present the artifacts for **human sign-off** (architecture at gate 2; 
 ### Phase 4: Advance
 
 - Update the registry entry: bump `phase:`, update **Current state**, append any decisions.
-- Update GitHub state: close completed issues, advance the board, set the next milestone.
+- Update GitHub state: advance the board, set the next milestone, and **close completed issues
+  programmatically** (a `gh issue close` loop) — do **not** rely on PR-body `Closes #N` keywords;
+  they're unreliable for multiple issues.
 
 ### Phase 5: Loop / finish
 

@@ -272,8 +272,11 @@ Require user intervention:
 - Generate meaningful PR descriptions
 - Extract information from commits
 - Auto-check template items when possible
-- Use **one closing keyword per issue** when a PR closes several (`Closes #5\nCloses #6`) — a single
-  `Closes #5, #6, #7` closes only the first issue; the rest stay open
+- When a PR closes several issues, **close them programmatically in a loop after merge**
+  (`for n in 5 6 7; do gh issue close $n --reason completed; done`). Do **not** rely on PR-body
+  `Closes #N` keywords for multiple issues — they're unreliable (a single `Closes #5, #6` closes
+  only the first; even one keyword per issue has closed only *some* on merge). Reference the issues
+  in the body for traceability, but close them explicitly.
 
 ## Configuration
 
