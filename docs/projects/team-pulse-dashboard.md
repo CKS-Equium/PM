@@ -1,8 +1,8 @@
 ---
 slug: team-pulse-dashboard
 repo: https://github.com/CKS-Equium/team-pulse-dashboard
-status: shipped
-phase: release
+status: active
+phase: build
 created: 2026-06-03
 team: [orchestrator, product-manager, software-architect, ux-designer, ui-designer]
 board: n/a
@@ -16,11 +16,15 @@ straight to the issue and unblock the team. The team's first dogfood project.
 
 ## Current state
 
-**SHIPPED & CLOSED — v0.1.0, 2026-06-03.** All 7 gates passed; PR #15 merged to `main`, tagged
-[v0.1.0](https://github.com/CKS-Equium/team-pulse-dashboard/releases/tag/v0.1.0). 55/55 tests; CI
-in place; runs locally (`npm install && npm start` → http://localhost:3000). **Post-mortem (gate 7)
-recorded:** [docs/postmortems/team-pulse-dashboard.md](../postmortems/team-pulse-dashboard.md) — 10
-recommendations, lessons written to 7 agents' notes.md; skill/contract follow-ups recorded.
+**v1.1 iteration in progress (build phase), 2026-06-04.** v0.1.0 shipped + post-mortemed (below).
+v1.1 scope: the **activity log shows too little per comment** ("Comment on #N" with no content) —
+add a **comment snippet + author/role** (operator request). Small enhancement within the existing
+architecture, so the full design gate (2) is waived (see Gate waivers); the engineer handles the
+extra comment-body fetch within the existing ETag/rate-limit model and the Reviewer checks it.
+First run on the **upgraded team** (secure-by-default + validate-don't-assert contracts).
+
+> **v0.1.0 (shipped 2026-06-03):** all 7 gates passed; PR #15; 55/55 tests; CI; runs locally.
+> Post-mortem: [docs/postmortems/team-pulse-dashboard.md](../postmortems/team-pulse-dashboard.md).
 
 ## Decision log
 
@@ -47,4 +51,7 @@ recommendations, lessons written to 7 agents' notes.md; skill/contract follow-up
 
 ## Gate waivers
 
-- _none_
+- 2026-06-04 (v1.1) — **Gate 2 (design) waived.** The comment-detail enhancement is a small,
+  localized change within the existing architecture (aggregator fetches comment bodies; activity
+  log renders a snippet + author). No new ADR needed; the engineer documents the rate-limit
+  handling in the PR and the Reviewer checks it. Build → test → review → release as normal.
