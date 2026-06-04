@@ -1,8 +1,8 @@
 ---
 slug: hearthflix
 repo: https://github.com/CKS-Equium/hearthflix
-status: active
-phase: review
+status: shipped
+phase: release
 created: 2026-06-04
 team: [orchestrator, product-manager, software-architect, ux-designer, ui-designer]
 board: n/a
@@ -17,12 +17,13 @@ read-only mounted media volume. Photos are a conditional v1 extra (only if cheap
 
 ## Current state
 
-**Gates 1–5 passed; PAUSED before release (gate 6) per operator.** Built (PR #17), tested (59/59),
-and reviewed — gate 5 cleared after a fix loop (security/correctness blockers all resolved). Code
-on branch `feat/build-v1`. **To release:** the operator builds/runs the Docker image on the Arch
-host (`docker compose up`, AC11) and confirms the in-browser ACs (full-screen, lightbox), then
-gate 6 sign-off → merge `feat/build-v1` → tag → post-mortem (gate 7). Resume with
-`run-project hearthflix`.
+**SHIPPED — v0.1.0 released 2026-06-04.** Operator ran the full acceptance test on a real Arch +
+Docker host: **all 13 ACs PASS, first try, release-ready** (byte-identical media checksums proved
+read-only; passthrough confirmed no-ffmpeg; HEVC transcoded; remux verified; LAN/no-auth confirmed).
+PR #17 merged to `main`, tagged
+[v0.1.0](https://github.com/CKS-Equium/hearthflix/releases/tag/v0.1.0). 3 non-blocker observations
+filed as v1.1 backlog (#21 HEAD/405, #22 live-confirm transcode cap, #23 add procps). Only gate 7
+(post-mortem) remains.
 
 ## Decision log
 
@@ -53,6 +54,11 @@ gate 6 sign-off → merge `feat/build-v1` → tag → post-mortem (gate 7). Resu
   configurable + rescan cooldown). 59/59 tests; both reviewers re-verified PASS. **PAUSED before
   release per operator** — gate 6 needs the operator to build/run the Docker image on the Arch host
   (AC11) and confirm in-browser ACs (AC6 full-screen, lightbox).
+- 2026-06-04 — **Gate 6 (release) approved & shipped v0.1.0.** Operator's Arch+Docker acceptance run:
+  all 13 ACs PASS first try. PR #17 merged, tagged v0.1.0. 3 backlog items filed (#21–#23).
+  **Lesson:** multi-issue auto-close STILL unreliable — even one `Closes #N` keyword per issue only
+  closed ~6/13 on merge; the rest were closed manually. The robust fix is to close tickets
+  **programmatically in a loop after merge**, not via PR-body keywords at all.
 
 ## Gate waivers
 
