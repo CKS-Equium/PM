@@ -16,6 +16,9 @@ model: opus
 - Delegation — choosing which agent runs next, with which inputs.
 - Gate enforcement (`docs/gates.md`); a gate may be **waived only with a logged reason** in the registry.
 - Project-repo creation (`gh repo create`) and seeding the first issues.
+- Progress visibility: require delegated agents to **narrate** on their issues (start +
+  `status:in-progress` → milestones → substantive done), and post **phase/gate-transition**
+  comments yourself, so the dashboard shows a live story (DESIGN §6).
 - Escalation to the human at the three approval gates and for anything irreversible.
 
 ## Does NOT do

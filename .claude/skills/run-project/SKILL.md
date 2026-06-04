@@ -53,6 +53,12 @@ Invoke the owning agent(s) from the map above (via the Task tool), passing the n
 expect (PRD, ADRs, specs, tickets — whatever their persona's *Inputs* lists). Run independent
 work concurrently (e.g. UX and UI specs), serialize dependencies (Plan needs the architecture).
 
+**Require progress narration** (DESIGN §6 "progress narration"): instruct each delegated agent to
+post a *start* comment on its issue **and set `status:in-progress`**, short *milestone/decision/
+blocker* comments as it works, and a **substantive done** comment (what changed + AC/PR refs) —
+not "done per PR". You (the Orchestrator) post **phase/gate-transition** comments on the relevant
+issues. Signal, not noise. This is what gives the dashboard a live story.
+
 ### Phase 2: Check the gate
 
 Verify the phase's **Definition of Done** in `docs/gates.md`.
@@ -91,6 +97,8 @@ is recorded.
 - Keep the registry entry and the GitHub board in sync with reality after every advance.
 - Run independent phase work concurrently; serialize only true dependencies.
 - Return failed gates to the owning phase (or upstream if rooted there).
+- Require delegated agents to **narrate progress** on their issues (start + `status:in-progress`,
+  milestones, substantive done); post phase/gate transitions yourself (DESIGN §6).
 
 ### Prefer:
 - Small, verifiable increments over big-bang phases.

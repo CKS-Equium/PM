@@ -23,6 +23,8 @@ model: <opus | sonnet | haiku>   # per DESIGN.md §8
 
 ## Outputs
 - <Artifacts it produces, in what format, for whom.>
+- **Progress narration** (DESIGN §6): on your issue, post a *start* comment (+ `status:in-progress`),
+  short *milestone/blocker* comments, and a *substantive* closing comment — never a bare "done per PR".
 
 ## Handoffs
 - **Receives from:** <role(s) / artifact(s)>
