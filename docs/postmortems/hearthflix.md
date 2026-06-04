@@ -192,20 +192,20 @@
 | #8 | Recorded as positive signal; no change | this report |
 | #9 | Recorded as positive signal; note appended to orchestrator | `.claude/agents/orchestrator/notes.md` |
 
-### Routed follow-ups requiring the gated path (NOT applied in this pass)
+### Routed follow-ups — ✅ ALL APPLIED 2026-06-04 (human-approved)
 
-These need the human/Reviewer contract gate (DESIGN §5) and are routed as proposals only:
+The operator approved applying all contract/skill recommendations (the human side of the DESIGN §5
+gate). Applied in merge "apply hearthflix post-mortem recommendations":
 
-- **Contract / gate-3 build-DoD (rec #2, RECURRING):** add a secure-by-default build checklist
-  (security headers + CSP, dependency CVE audit, non-root container, loopback default) to the
-  senior-software-engineer contract and/or the gate-3 Definition of Done. **Strongly recommended —
-  the same finding class has now blocked gate 5 on both projects.**
-- **Contract (rec #1):** add "spikes validate empirically, not assert; label validated-vs-assumed
-  with conditions; NFR-bound claims must be demonstrated" to the researcher-analyst contract.
-- **Skill (rec #3):** replace PR-body-keyword closing with a programmatic close-loop after merge in
-  start-project / run-project (and/or smart-merge). Supersedes the team-pulse keyword convention.
-- **Process decision (rec #7):** resolve the no-Bash narration gap (scoped narration capability vs
-  formalized "Orchestrator narrates for no-Bash agents"). Carried over from team-pulse, still open.
+- ✅ **Contract + gate-3 DoD (rec #2, RECURRING):** secure-by-default build checklist (security
+  headers/CSP, dependency CVE audit, non-root container, loopback, no-unbounded-wait, resource
+  teardown) added to `senior-software-engineer/persona.md` **and** to `docs/gates.md` gate-3 DoD.
+- ✅ **Contract (rec #1):** validate-don't-assert (label `validated` vs `assumed`; NFR-bound claims
+  must be demonstrated) added to `researcher-analyst/persona.md`.
+- ✅ **Skill (rec #3):** programmatic post-merge close-loop now specified in `start-project`,
+  `run-project`, and `smart-pull-request`; PR-keyword reliance dropped.
+- ✅ **Process decision (rec #7):** no-Bash narration gap resolved — DESIGN §6 + `run-project` now
+  state the Orchestrator posts narration on behalf of agents lacking `gh` (they return the text).
 
 ## 5. Metrics (signal)
 
