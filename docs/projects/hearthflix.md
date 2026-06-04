@@ -22,8 +22,11 @@ Docker host: **all 13 ACs PASS, first try, release-ready** (byte-identical media
 read-only; passthrough confirmed no-ffmpeg; HEVC transcoded; remux verified; LAN/no-auth confirmed).
 PR #17 merged to `main`, tagged
 [v0.1.0](https://github.com/CKS-Equium/hearthflix/releases/tag/v0.1.0). 3 non-blocker observations
-filed as v1.1 backlog (#21 HEAD/405, #22 live-confirm transcode cap, #23 add procps). Only gate 7
-(post-mortem) remains.
+filed as v1.1 backlog (#21 HEAD/405, #22 live-confirm transcode cap, #23 add procps).
+**Gate 7 (post-mortem) recorded — project CLOSED.**
+[docs/postmortems/hearthflix.md](../postmortems/hearthflix.md): 9 recommendations, lessons to 7
+agents' notes; 2 RECURRING (secure-by-default build checklist; programmatic ticket-close) flagged
+as contract/skill candidates.
 
 ## Decision log
 
@@ -59,6 +62,11 @@ filed as v1.1 backlog (#21 HEAD/405, #22 live-confirm transcode cap, #23 add pro
   **Lesson:** multi-issue auto-close STILL unreliable — even one `Closes #N` keyword per issue only
   closed ~6/13 on merge; the rest were closed manually. The robust fix is to close tickets
   **programmatically in a loop after merge**, not via PR-body keywords at all.
+- 2026-06-04 — **Gate 7 (post-mortem) recorded — project CLOSED.** 9 recommendations; lessons → 7
+  agents' notes. **2 RECURRING lessons** (proven across team-pulse + hearthflix): (a) secure-by-default
+  build checklist (headers/CSP, dep CVE audit, non-root) belongs in the senior-eng contract / gate-3
+  DoD; (b) close tickets programmatically post-merge (keywords unreliable). Gates first-try 6/7;
+  0 escaped defects. Contract/skill proposals recorded for a follow-up apply pass.
 
 ## Gate waivers
 
