@@ -2,7 +2,7 @@
 slug: hearthflix
 repo: https://github.com/CKS-Equium/hearthflix
 status: active
-phase: build
+phase: test
 created: 2026-06-04
 team: [orchestrator, product-manager, software-architect, ux-designer, ui-designer]
 board: n/a
@@ -33,6 +33,10 @@ Senior Engineer builds → gate 3.
   thumbnails, Docker (RO `/media`, RW `/data`), **SW transcode for v1 + VAAPI opt-in seam**,
   per-session ffmpeg w/ 90s watchdog + cap 2. **Photos IN for v1** (cheap). **LAN/no-auth
   explicitly accepted by the operator** (README to document risk).
+- 2026-06-04 — **Gate 3 (build) passed.** Tickets #4–#16 delivered as PR #17. 31 tests pass; live
+  smoke test verified scan/thumbnail/pass-through(no-ffmpeg)/HLS-transcode-lifecycle/cap-503/clean
+  shutdown. VAAPI = documented v1.1 seam. Docker-runtime + in-browser ACs flagged for QA (need a
+  Docker host / real browser).
 
 ## Gate waivers
 
