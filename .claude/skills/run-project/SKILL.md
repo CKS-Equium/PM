@@ -70,9 +70,15 @@ Verify the phase's **Definition of Done** in `docs/gates.md`.
 
 ### Phase 3: Human gate (if this is gate 2 or 6)
 
-Pause and present the artifacts for **human sign-off** (architecture at gate 2; release at gate 6).
-- **Approved:** continue. Log the approval in the registry's Decision log.
-- **Changes:** return to the owning agent; re-present.
+**Raise it on the board first** so it surfaces in the dashboard's "Needs you" panel (no dashboard
+change needed — the panel already shows open `needs-human` issues): open a **`needs-human` issue in
+the project repo**, assigned to the operator, titled e.g. `🚦 Gate 2: approve architecture & design`,
+body = the summary + links to the artifacts being approved.
+
+Then present the artifacts for **human sign-off** (architecture at gate 2; release at gate 6).
+- **Approved:** **close the gate issue** (clears it from "Needs you"), continue, and log the approval
+  in the registry's Decision log.
+- **Changes:** keep the gate issue open; return to the owning agent; re-present.
 
 ### Phase 4: Advance
 
