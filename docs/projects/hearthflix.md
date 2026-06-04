@@ -17,11 +17,12 @@ read-only mounted media volume. Photos are a conditional v1 extra (only if cheap
 
 ## Current state
 
-**Gate 2 (architecture & design) approved 2026-06-04; entering build phase.** Design merged to
-`main` (#1, #2 closed): FastAPI/Python + SQLite, HLS+hls.js transcoding, ffprobe pass-through,
-eager thumbnails, Docker (RO `/media`, RW `/data`), SW-transcode + VAAPI opt-in, photos IN, LAN
-no-auth (operator-accepted), cinema-dark UI. Next: Project Manager breaks into build tickets →
-Senior Engineer builds → gate 3.
+**Gates 1–5 passed; PAUSED before release (gate 6) per operator.** Built (PR #17), tested (59/59),
+and reviewed — gate 5 cleared after a fix loop (security/correctness blockers all resolved). Code
+on branch `feat/build-v1`. **To release:** the operator builds/runs the Docker image on the Arch
+host (`docker compose up`, AC11) and confirms the in-browser ACs (full-screen, lightbox), then
+gate 6 sign-off → merge `feat/build-v1` → tag → post-mortem (gate 7). Resume with
+`run-project hearthflix`.
 
 ## Decision log
 
@@ -46,6 +47,12 @@ Senior Engineer builds → gate 3.
   headers (CSP/etc.); **FIND-02** CVE-bearing deps (jinja2 3.1.5→3.1.6, python-multipart bump);
   FIND-03 Docker runs as root; FIND-04 binds 0.0.0.0. Path-traversal/subprocess/output-encoding/
   read-only all PASSED. Fix loop + re-review needed before gate 5 clears.
+- 2026-06-04 — **Gate 5 (review) PASSED after fix loop.** Engineer fixed all blockers (HLS
+  session-dir teardown proven; transcode error-state vs "preparing forever"; security headers +
+  strict CSP via data-attributes; jinja2 3.1.6 + python-multipart removed; non-root Docker; bind
+  configurable + rescan cooldown). 59/59 tests; both reviewers re-verified PASS. **PAUSED before
+  release per operator** — gate 6 needs the operator to build/run the Docker image on the Arch host
+  (AC11) and confirm in-browser ACs (AC6 full-screen, lightbox).
 
 ## Gate waivers
 
