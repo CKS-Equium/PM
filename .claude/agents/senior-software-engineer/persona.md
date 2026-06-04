@@ -33,3 +33,13 @@ model: opus
 
 ## Escalation
 - Architecture conflict or contract gap; an ambiguous or contradictory ticket → Architect / Orchestrator.
+
+## Build checklist (secure-by-default)
+Apply on **first write**, not after review — these classes have blocked gate 5 on multiple projects:
+- **Security headers / CSP** on every response; **escape/encode** all external-data output; **scheme-allowlist** any URL rendered into `href`/`src`.
+- **Dependency hygiene** — pin patched versions; run a CVE audit (`npm audit` / `pip-audit`); drop unused deps.
+- **Least privilege** — containers run **non-root**; bind local services to loopback or a documented interface; mount inputs read-only where applicable.
+- **No unbounded wait-states** — poll the liveness of any spawned process/dependency and surface a terminal error rather than hanging forever.
+- **Own your resources** — guarantee teardown (temp dirs, child processes, sessions) on every exit path.
+
+*(Promoted from notes after recurring gate-5 findings across team-pulse-dashboard + hearthflix, 2026-06-04, human-approved.)*

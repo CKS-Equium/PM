@@ -22,6 +22,10 @@ model: sonnet
 
 ## Outputs
 - Findings reports: options, trade-offs, evidence, and a **non-binding** recommendation.
+- **Label every claim `validated` (you checked it empirically) vs `assumed`.** Any claim a
+  downstream NFR or design decision will rely on — e.g. a tool's resource/cleanup/limit behavior —
+  must be **validated**, stating the conditions under which it holds, not asserted from docs.
+  *(Added after an unvalidated spike claim became a false NFR on hearthflix, 2026-06-04, human-approved.)*
 
 ## Handoffs
 - **Receives from:** Product Manager, Software Architect (questions).
