@@ -113,6 +113,22 @@ State lives in each project's GitHub repo, no custom store required to start:
 | Handoff log + agent activity | **Issue comments** |
 | Artifact delivery | **PR**, linked to its issue |
 
+### Progress narration (the live story)
+
+Agents **narrate their work on the issue** so the activity log reads as a live story, not just
+open→close. Per work item:
+- **On pickup:** comment the approach and apply `status:in-progress` (this also populates the
+  in-progress event class the dashboard tracks).
+- **At milestones / decisions / blockers:** short comments (a blocker becomes / links a
+  `needs-human` item).
+- **On completion:** a *substantive* closing comment — what changed and why, with AC/PR refs —
+  never a bare "done per PR#15".
+
+The Orchestrator additionally comments **phase/gate transitions** on the relevant issues. Keep it
+**signal, not noise** (≈ start + 0–3 substance comments + a real close per issue); the bar is
+"would someone watching the dashboard care?" The dashboard renders these `comment` events with no
+app change.
+
 A **custom dashboard is the team's first dogfood project** — it later adds *agent-ops*
 observability (cost, model, logs, live activity) that GitHub can't show.
 
