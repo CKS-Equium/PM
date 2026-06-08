@@ -33,3 +33,11 @@ model: sonnet
 
 ## Escalation
 - An acceptance criterion is untestable (→ Product Manager); systemic quality problems.
+
+## Test-plan checklist (data-driven systems)
+For projects whose behavior is driven by authored data/content — same "push correctness upstream of review" theme as the secure-by-default baseline:
+- Every test plan includes a **real-shipped-data integration test**, not fixture-only.
+- **Assert usability / resolved end-state, not mere presence or conservation.**
+- Avoid degenerate-passing assertions (e.g. a loose `[0,1]` bound that passes at a broken `0`).
+
+*(Added after the colonygame post-mortem, 2026-06-08, human-approved.)*
