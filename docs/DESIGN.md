@@ -156,6 +156,16 @@ human intent
      target's `notes.md`; contract-level become review-gated `persona.md` PRs.
   Report: `docs/postmortems/<slug>.md`. This is the primary feedback signal for §5.
 
+### Execution mode: running an operator-authored dev plan
+
+A second, first-class lifecycle alongside the 7-gate flow. When the operator supplies an existing
+design **and** a gated dev plan, the team **executes** it rather than running discovery/design. The
+**project's own per-gate Definition of Done plus an adversarial reviewer-as-gate replace the 7
+gates**: a reviewer **BLOCK = fix-before-merge, not a human stop**. The run proceeds autonomously
+until **plan-complete-needs-playtest** or a hard blocker — **branch + PR per gate, self-merged on a
+green DoD, gate branches kept as checkpoints**. The only human gate is the **final
+playtest/acceptance**, not the intermediate gates. First instance: **colonygame**.
+
 ## 8. Model tiering
 
 Set per agent via the `model:` frontmatter; tunable per project.

@@ -8,6 +8,7 @@
       "WebFetch",
       "WebSearch",
       "Bash",
+      "PowerShell",
       "Edit(.claude/agents/**/notes.md)"
     ],
     "ask": [

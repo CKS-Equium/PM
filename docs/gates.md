@@ -18,6 +18,18 @@ Legend: 👤 = **human approval required** before passing.
 | 6 | **Release** 👤 | CI green; build/deploy succeeds; changelog + user docs updated; rollback path known | DevOps → **human signs off** |
 | 7 | **Post-mortem (closing gate)** | Self-reviews + 360 reviews complete; improvement recommendations recorded and routed (notes commits / contract PRs) | Process Engineer |
 
+### Data-driven / authored-content projects
+
+For projects whose behavior is **driven by authored data/content** (game data, rule tables,
+config-as-code), the build and test DoD carry extra requirements — same "push correctness
+upstream of review" theme as the secure-by-default baseline:
+
+- **Gate 3 (Build):** the **full solution / all build targets** must compile each gate — not just
+  the unit-testable sub-module. Authored content is **validated at load** and **fails loudly**
+  (throws) on bad/unknown data rather than silently no-op'ing.
+- **Gate 4 (Test):** at least one **integration test runs against the real shipped data**, not
+  only hand-authored fixtures.
+
 ## Human-in-the-loop
 
 Autonomy runs freely *between* gates. Humans are inserted only at the three high-leverage,
@@ -49,3 +61,7 @@ come (a `schedule`-skill cron job) — until then, escalations are checked manua
   upstream (e.g. a Review finding that traces to a bad requirement → back to Discovery).
 - Gate outcomes are signals for the post-mortem and the self-improvement loop (see
   [DESIGN.md](DESIGN.md) §5, §7).
+- **Execution mode** is a first-class alternative to these 7 gates: when the operator supplies a
+  design + a gated dev plan, the project's own per-gate DoD and an adversarial reviewer-as-gate
+  replace them (reviewer BLOCK = fix-before-merge, not a human stop; the final playtest is the only
+  human gate). See [DESIGN.md](DESIGN.md) §7, "Execution mode."

@@ -42,4 +42,11 @@ Apply on **first write**, not after review — these classes have blocked gate 5
 - **No unbounded wait-states** — poll the liveness of any spawned process/dependency and surface a terminal error rather than hanging forever.
 - **Own your resources** — guarantee teardown (temp dirs, child processes, sessions) on every exit path.
 
-*(Promoted from notes after recurring gate-5 findings across team-pulse-dashboard + hearthflix, 2026-06-04, human-approved.)*
+## Build checklist (data-driven correctness)
+For projects whose behavior is driven by authored data/content — same "push correctness upstream of review" theme:
+- Build the **full solution**, not just the testable slice, before declaring the build green.
+- Prefer **explicit discriminators / typed fields** over inferring behavior from incidental fields (e.g. don't overload a spatial field as a type tag).
+- **Validate authored data at load and throw on bad/unknown** — never silently no-op.
+- An acceptance/smoke scenario must exercise the **full produce→consume loop** — assert the good is *usable/consumed*, not merely present.
+
+*(Secure-by-default promoted from notes after recurring gate-5 findings across team-pulse-dashboard + hearthflix, 2026-06-04, human-approved. Data-driven correctness added after the colonygame post-mortem, 2026-06-08, human-approved.)*
