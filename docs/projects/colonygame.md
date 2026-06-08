@@ -17,10 +17,19 @@ T0→T5 gate ladder, placeholder primitives, headless-verified). Run via the PM 
 
 ## Current state
 
-**Registered for dashboard visibility; the overnight autonomous build is QUEUED, not started**
-(awaiting the operator's "go"). When it runs, work proceeds on `gate/tN` branches with a PR per gate
-(self-merged on green DoD: `dotnet build` + sim `dotnet test` + headless gate scenario + Godot
-headless import + the `using Godot` grep guard). Activity (gate PRs) will stream here once it starts.
+**Single-plane DEV_PLAN T0→T5 COMPLETE (2026-06-08, overnight autonomous run) — awaiting operator
+playtest.** All six gates built, reviewed, and merged to `main` (PRs #1–#6, each self-merged on
+green DoD; `gate/t0…t5` branches kept as checkpoints). **132 sim unit tests green; all six headless
+gate scenarios pass (`[GATE t0..t5 PASS]`); `dotnet build ColonyGame.sln` clean; `src/Sim` stays
+Godot-free.** The win condition fires (tier-5-of-everything → Tier-6 Emperor ascension at the
+verified tick) and the sandbox continues past victory.
+
+**What is verified vs. what needs the human:** the *systems* (economy, materials/property-tag
+recipes, population spine, power, research, circuits, builder-crew pyramid, logistics web, the five
+needs, the win condition) are unit-tested + headless-verified. The *feel/visuals/fun* and the
+interactive GUI render are the operator's playtest (the one DoD item an agent can't clear — the
+headless scene boots clean, but GUI rendering/input wasn't run). Presentation is deliberate
+placeholder primitives (cylinders/cuboids/markers) per the dev plan's art bar.
 
 ## Decision log
 

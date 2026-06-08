@@ -15,6 +15,6 @@ is the control-plane index of those projects — metadata and links only, never 
 |---------|--------|-------|------|
 | [team-pulse-dashboard](team-pulse-dashboard.md) | active (v1.1) | build | [CKS-Equium/team-pulse-dashboard](https://github.com/CKS-Equium/team-pulse-dashboard) |
 | [hearthflix](hearthflix.md) | shipped | release | [CKS-Equium/hearthflix](https://github.com/CKS-Equium/hearthflix) |
-| [colonygame](colonygame.md) | active (build queued) | build | [CKS-Equium/ColonyGame](https://github.com/CKS-Equium/ColonyGame) |
+| [colonygame](colonygame.md) | active (T0–T5 built, awaiting playtest) | build | [CKS-Equium/ColonyGame](https://github.com/CKS-Equium/ColonyGame) |
 
 <!-- Regenerate this table from the frontmatter of each <slug>.md (excluding _template.md). -->
