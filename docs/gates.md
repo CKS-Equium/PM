@@ -41,6 +41,14 @@ of what was checked and what is knowingly still open. Owned by the **Quality Eng
 **Orchestrator** confirms it at the transition. A gate may pass with open follow-ups, but they must
 be recorded and routed (ticket / notes / next gate).
 
+The evidence record + a **one-command verifier** (`ci.sh` or equivalent) together also serve as an
+**interruption-tolerance / handoff** artifact: any actor (a fresh agent, the Orchestrator, the
+human) must be able to **independently re-verify and integrate** a sub-phase from its durable
+artifacts alone — without resurrecting the building agent's context. This makes long autonomous runs
+robust to agent/orchestrator death, not merely auditable. *(Added operator-approved 2026-06-16, from
+the new-cadair A/B post-mortem — A.6's building agent died twice on transient API errors and the
+sub-phase still shipped because the Orchestrator re-verified from `ci.sh` + the evidence record.)*
+
 ## Requirement → test → source traceability (gate 4)
 
 Gate 4 is not met until a **traceability matrix** (`docs/templates/traceability-matrix-template.md`)
@@ -57,7 +65,16 @@ pass** at review — distinct from the happy-path correctness/scope review — t
 the degenerate inputs (BAD/invalid input, NaN/Inf, divide-by-zero / degenerate params, boundary
 values, latched/stuck states, dependency death, unbounded waits). Run by the **Reviewer/Critic**
 using the named lens in its contract; reused as the same checklist wherever this class of code
-appears. It complements, and does not replace, the Security Engineer's review.
+appears. It complements, and does not replace, the Security Engineer's review. The same lens is run
+by the **Senior Engineer as a self-review at gate 3** (authoring side), so the gate-5 reviewer pass
+*confirms* rather than *discovers* the degenerate-case handling.
+
+Where the product has a **primary operator-initiated entry action** (start batch, submit, confirm),
+the **system-validation / acceptance step must exercise *that* path** (or explicitly register the
+gap), not only an auto-driven one — proving the data path is necessary but insufficient if the
+operator's first action goes unverified. *(Both added operator-approved 2026-06-16, from the
+new-cadair A/B post-mortem; the operator-path rule recurs from colonygame — "verify the path the
+human takes.")*
 
 ## Human-in-the-loop
 

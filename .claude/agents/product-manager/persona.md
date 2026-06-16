@@ -40,3 +40,8 @@ Author every requirement/AC so it can be **traced**: each "shall"/AC must be ind
 verifiable and discrete enough for QA to map to ≥1 test and a source location (the gate-4
 traceability matrix). Avoid compound or untestable ACs — a requirement that can't be traced isn't
 done. *(Added operator-approved 2026-06-16, from the Cadair reference review.)*
+
+Write acceptance criteria around the **operator's primary entry action** (start batch, submit,
+confirm), not only the resulting data flow — an auto-driven demo otherwise proves the machine path
+and leaves the human's first step unverified. *(Added operator-approved 2026-06-16, from the
+new-cadair A/B post-mortem; recurring from colonygame — "verify the path the human takes.")*

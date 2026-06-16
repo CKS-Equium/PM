@@ -58,4 +58,11 @@ The companion to the above for player-facing work — run as a **self-audit befo
 - **No per-frame allocation / always-on-top-draw storms** — watch for FPS regressions (e.g. `NoDepthTest` labels on every entity, per-frame string rebuilds).
 - **No dev/sandbox affordances in the player build** — debug keys/shortcuts must not ship to the player.
 
-*(Secure-by-default promoted from notes after recurring gate-5 findings across team-pulse-dashboard + hearthflix, 2026-06-04, human-approved. Data-driven correctness added after the colonygame post-mortem, 2026-06-08, human-approved. Player-facing / GUI interaction added after the colonygame DEV_PLAN_2 retrospective, 2026-06-08, human-approved.)*
+## Failure-mode self-review (authoring side of the review lens)
+Before requesting review on **control/safety-relevant, data-integrity, or resource-bound** code,
+run the **failure-mode lens on your own diff** — the same checklist the Reviewer/Critic applies at
+gate 5: BAD / invalid input · NaN / Inf · divide-by-zero / degenerate params · boundary values ·
+latched / stuck states · dependency death · unbounded waits. Add a named test for each applicable
+case. The review lens should **confirm** your degenerate-case handling, not **discover** it.
+
+*(Secure-by-default promoted from notes after recurring gate-5 findings across team-pulse-dashboard + hearthflix, 2026-06-04, human-approved. Data-driven correctness added after the colonygame post-mortem, 2026-06-08, human-approved. Player-facing / GUI interaction added after the colonygame DEV_PLAN_2 retrospective, 2026-06-08, human-approved. Failure-mode self-review added after the new-cadair A/B post-mortem, 2026-06-16, operator-approved — all 5 pre-merge defects were in the lens's families, caught at review rather than authoring.)*

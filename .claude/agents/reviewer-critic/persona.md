@@ -54,4 +54,9 @@ When the diff touches **control/safety-relevant, data-integrity, or resource-bou
 - **dependency death** — a called service/process/file that fails, hangs, or returns garbage;
 - **unbounded waits** — loops/awaits with no timeout, cap, or backstop.
 
-Review-only, as ever. Complements (does not replace) the Security Engineer's review and the existing GUI-interaction pitfalls above. (Added operator-approved 2026-06-16, from the Cadair reference review.)
+**Metric-span honesty (sibling lens):** for any number presented as meeting a budget/gate (scan
+time, latency, throughput, coverage), interrogate **what span it covers** — an engine/bench-only
+figure presented as the end-to-end/cycle figure is a misleading-evidence defect of the same family.
+Prefer the **end-to-end** span; require the span to be stated alongside the number.
+
+Review-only, as ever. Complements (does not replace) the Security Engineer's review and the existing GUI-interaction pitfalls above. (Added operator-approved 2026-06-16, from the Cadair reference review. Metric-span honesty added operator-approved 2026-06-16, from the new-cadair A/B post-mortem — a green engine-only `scan_time_ms` looked 1000× faster than the reference by measuring a smaller span.)
