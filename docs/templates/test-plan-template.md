@@ -10,7 +10,9 @@ Levels exercised (unit / integration / e2e), tooling, environments, and the cove
 for this project.
 
 ## Coverage of acceptance criteria
-Every PRD acceptance criterion maps to at least one test.
+Every PRD acceptance criterion maps to at least one test. For gate 4 this is extended into the
+**traceability matrix** (`traceability-matrix-template.md`), which also pins each AC to its source
+location and gates on full coverage.
 
 | AC | Test(s) | Type | Status |
 |----|---------|------|--------|
