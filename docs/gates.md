@@ -13,8 +13,8 @@ Legend: 👤 = **human approval required** before passing.
 | 1 | **Discovery → Design** 👤 | PRD exists with user problem, scope, and **testable** acceptance criteria; open questions resolved or logged | Product Manager → **human signs off** |
 | 2 | **Design → Build** 👤 | Architecture documented as ADRs; interface contracts + NFRs defined; UX flows and UI specs approved; plan broken into tickets with dependencies | Architect + Design → **human signs off** |
 | 3 | **Build → Test** | All planned tickets implemented; code compiles/builds; self-review done; no `TODO`/stub in delivered scope; **secure-by-default baseline met** (security headers/CSP, dependency CVE audit, non-root container, no unbounded wait-states — see the senior-engineer contract) | Senior Engineer |
-| 4 | **Test → Review** | Test plan executed; acceptance criteria verified; coverage meets project threshold; no failing tests | Quality Engineer |
-| 5 | **Review → Release** | Adversarial review passed (correctness + simplicity); security review clean; no unresolved high-severity findings | Reviewer/Critic + Security Engineer |
+| 4 | **Test → Review** | Test plan executed; acceptance criteria verified; coverage meets project threshold; no failing tests; **traceability matrix complete** — every requirement/AC traced to ≥1 test and a source location (see below) | Quality Engineer |
+| 5 | **Review → Release** | Adversarial review passed (correctness + simplicity); **failure-mode pass run on any safety/data-integrity-relevant change** (see below); security review clean; no unresolved high-severity findings | Reviewer/Critic + Security Engineer |
 | 6 | **Release** 👤 | CI green; build/deploy succeeds; changelog + user docs updated; rollback path known | DevOps → **human signs off** |
 | 7 | **Post-mortem (closing gate)** | Self-reviews + 360 reviews complete; improvement recommendations recorded and routed (notes commits / contract PRs) | Process Engineer |
 
@@ -29,6 +29,35 @@ upstream of review" theme as the secure-by-default baseline:
   (throws) on bad/unknown data rather than silently no-op'ing.
 - **Gate 4 (Test):** at least one **integration test runs against the real shipped data**, not
   only hand-authored fixtures.
+
+## Gate evidence record (every gate)
+
+Passing a gate's DoD includes producing/updating a short **gate evidence record**
+(`docs/templates/evidence-record-template.md`): a table of {exit criterion → status → evidence
+(verifying command / test ref / output)} plus a **known-follow-ups register** — gaps named, not
+hidden. This operationalises the **verification-is-necessary-but-insufficient** principle (see the
+playtest gate below): a green build is *evidence*, not proof, so each gate leaves an honest trail
+of what was checked and what is knowingly still open. Owned by the **Quality Engineer**; the
+**Orchestrator** confirms it at the transition. A gate may pass with open follow-ups, but they must
+be recorded and routed (ticket / notes / next gate).
+
+## Requirement → test → source traceability (gate 4)
+
+Gate 4 is not met until a **traceability matrix** (`docs/templates/traceability-matrix-template.md`)
+maps every acceptance criterion / requirement ("shall") to **≥1 test and the source location** that
+implements it. An untraced requirement fails the gate. For projects with a formal spec/FS this is
+**CI-enforceable** — fail the build if any matrix entry lacks a linked test or source ref. Owned by
+the **Quality Engineer**; ACs must be authored traceably/testably by the **Product Manager**
+upstream.
+
+## Failure-mode pass (gate 5)
+
+Safety/control-relevant, data-integrity, or resource-bound changes get an explicit **failure-mode
+pass** at review — distinct from the happy-path correctness/scope review — that deliberately probes
+the degenerate inputs (BAD/invalid input, NaN/Inf, divide-by-zero / degenerate params, boundary
+values, latched/stuck states, dependency death, unbounded waits). Run by the **Reviewer/Critic**
+using the named lens in its contract; reused as the same checklist wherever this class of code
+appears. It complements, and does not replace, the Security Engineer's review.
 
 ## Human-in-the-loop
 

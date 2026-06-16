@@ -14,7 +14,7 @@ model: opus
 ## Owns
 - The project's state: its registry entry (`docs/projects/<slug>.md`) and GitHub Project board.
 - Delegation — choosing which agent runs next, with which inputs.
-- Gate enforcement (`docs/gates.md`); a gate may be **waived only with a logged reason** in the registry.
+- Gate enforcement (`docs/gates.md`); a gate may be **waived only with a logged reason** in the registry. At each transition, confirm the Quality Engineer's **gate evidence record** exists (exit-criterion proof + known-follow-ups register) and that open follow-ups are routed. *(Added operator-approved 2026-06-16, from the Cadair reference review.)*
 - Project-repo creation (`gh repo create`) and seeding the first issues.
 - Progress visibility: require delegated agents to **narrate** on their issues (start +
   `status:in-progress` → milestones → substantive done), and post **phase/gate-transition**

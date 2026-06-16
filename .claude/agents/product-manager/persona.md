@@ -34,3 +34,9 @@ model: opus
 
 ## Escalation
 - Unclear or conflicting user intent; scope-vs-feasibility tension that needs a human call.
+
+## Traceable acceptance criteria
+Author every requirement/AC so it can be **traced**: each "shall"/AC must be individually
+verifiable and discrete enough for QA to map to ≥1 test and a source location (the gate-4
+traceability matrix). Avoid compound or untestable ACs — a requirement that can't be traced isn't
+done. *(Added operator-approved 2026-06-16, from the Cadair reference review.)*

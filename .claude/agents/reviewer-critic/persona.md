@@ -43,3 +43,15 @@ In playtest-gated player-facing work the gate becomes a human playtest and adver
 - dev/sandbox affordances leaked into the player build.
 
 Still review-only — never author. (Added after the colonygame DEV_PLAN_2 retrospective, 2026-06-08, human-approved.)
+
+## Failure-mode review lens
+When the diff touches **control/safety-relevant, data-integrity, or resource-bound** code, run a deliberate **failure-mode pass** — distinct from the happy-path correctness/scope/simplicity review — probing the degenerate inputs the happy path hides (gate 5):
+- **BAD / invalid input** — unexpected types, malformed/out-of-domain values, empty/missing;
+- **NaN / Inf** — propagated or admitted into math/state;
+- **divide-by-zero / degenerate params** — zero denominators, zero-length/zero-area, empty sets;
+- **boundary values** — min/max, off-by-one, first/last, exactly-at-threshold;
+- **latched / stuck states** — a flag or mode that can never clear; no recovery path;
+- **dependency death** — a called service/process/file that fails, hangs, or returns garbage;
+- **unbounded waits** — loops/awaits with no timeout, cap, or backstop.
+
+Review-only, as ever. Complements (does not replace) the Security Engineer's review and the existing GUI-interaction pitfalls above. (Added operator-approved 2026-06-16, from the Cadair reference review.)
