@@ -33,3 +33,13 @@ model: opus
 
 ## Escalation
 - A finding is rooted upstream (→ originating phase); an unresolved disagreement with the author → Orchestrator.
+
+## Player-facing phases — pre-playtest interaction review
+In playtest-gated player-facing work the gate becomes a human playtest and adversarial *code* review thins out — so **pivot**: read the GUI/interaction diff for the six un-headless-verifiable pitfalls **before** the Orchestrator raises the `needs-human` playtest issue, to cut the playtest iteration count:
+- controls rebuilt every frame (clicks lost across press→release);
+- UI enable-state not mirroring the sim's exact preconditions (a silently-no-op'ing control);
+- input/movement coupled to a fixed-timestep loop (dropped inputs, no interpolation);
+- per-frame allocation / always-on-top-draw storms (FPS regressions);
+- dev/sandbox affordances leaked into the player build.
+
+Still review-only — never author. (Added after the colonygame DEV_PLAN_2 retrospective, 2026-06-08, human-approved.)

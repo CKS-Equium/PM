@@ -49,4 +49,13 @@ For projects whose behavior is driven by authored data/content — same "push co
 - **Validate authored data at load and throw on bad/unknown** — never silently no-op.
 - An acceptance/smoke scenario must exercise the **full produce→consume loop** — assert the good is *usable/consumed*, not merely present.
 
-*(Secure-by-default promoted from notes after recurring gate-5 findings across team-pulse-dashboard + hearthflix, 2026-06-04, human-approved. Data-driven correctness added after the colonygame post-mortem, 2026-06-08, human-approved.)*
+## Build checklist (player-facing / GUI interaction)
+The companion to the above for player-facing work — run as a **self-audit before requesting a playtest**, because GUI/interaction **cannot be headless-verified** (a green machine-DoD can hide a broken-in-the-hand game; the human playtest is the real gate):
+- **Persist interactive controls** — never rebuild buttons/menus every frame; a click spans press→release across frames, and a control rebuilt mid-click loses the click. Rebuild only on change.
+- **UI enable-state mirrors the sim's exact preconditions** — a button must not look enabled while the sim will refuse the action (a silently-no-op'ing control is a bug); show the real reason when disabled.
+- **Capture input every frame**, not inside a fixed-timestep loop — else inputs drop and responsiveness couples to the tick rate.
+- **Interpolate rendered positions** between sim ticks — else movement snaps/stutters at high fps.
+- **No per-frame allocation / always-on-top-draw storms** — watch for FPS regressions (e.g. `NoDepthTest` labels on every entity, per-frame string rebuilds).
+- **No dev/sandbox affordances in the player build** — debug keys/shortcuts must not ship to the player.
+
+*(Secure-by-default promoted from notes after recurring gate-5 findings across team-pulse-dashboard + hearthflix, 2026-06-04, human-approved. Data-driven correctness added after the colonygame post-mortem, 2026-06-08, human-approved. Player-facing / GUI interaction added after the colonygame DEV_PLAN_2 retrospective, 2026-06-08, human-approved.)*

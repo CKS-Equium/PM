@@ -65,3 +65,23 @@ come (a `schedule`-skill cron job) — until then, escalations are checked manua
   design + a gated dev plan, the project's own per-gate DoD and an adversarial reviewer-as-gate
   replace them (reviewer BLOCK = fix-before-merge, not a human stop; the final playtest is the only
   human gate). See [DESIGN.md](DESIGN.md) §7, "Execution mode."
+
+### Playtest-gated / player-facing work
+
+For player-facing work where the gate is a **human playtest** (game-feel), the machine-DoD is
+**necessary-but-insufficient**: green `build` + green tests means "the sim didn't regress," **not**
+"the game works." GUI/interaction **cannot be headless-verified** — so a recurring bug class stays
+invisible to CI and only surfaces in the operator's hand, at the cost of a playtest round-trip. Two
+steps gate the playtest request so the human playtest stays the *real* gate but isn't burned on
+diff-visible defects:
+
+- **GUI interaction self-audit (Senior Engineer)** — before declaring a phase playtest-ready, the
+  engineer runs the player-facing build checklist (see the senior-engineer contract): controls not
+  rebuilt every frame; input captured every frame, not in a fixed-timestep loop; rendered positions
+  interpolated between ticks; no per-frame allocation / always-on-top-draw storms; UI enable-state
+  mirrors the sim's exact preconditions; no dev/sandbox affordances in the player build.
+- **Pre-playtest interaction review (Reviewer/Critic)** — before the Orchestrator raises the
+  `needs-human` playtest issue, the reviewer reads the GUI/interaction diff for those same
+  un-headless-verifiable pitfalls (review-only, as ever). In player-facing phases the adversarial
+  *code* review thins out; this is where it pivots to earn its keep and cut the playtest iteration
+  count.
