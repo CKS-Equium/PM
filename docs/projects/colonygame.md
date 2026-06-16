@@ -1,8 +1,8 @@
 ---
 slug: colonygame
 repo: https://github.com/CKS-Equium/ColonyGame
-status: active
-phase: build
+status: parked
+phase: build (DEV_PLAN_2 player-first QoL, paused mid-flight)
 created: 2026-06-07
 team: [orchestrator, software-architect, senior-software-engineer, quality-engineer, reviewer-critic]
 board: n/a
@@ -30,6 +30,20 @@ needs, the win condition) are unit-tested + headless-verified. The *feel/visuals
 interactive GUI render are the operator's playtest (the one DoD item an agent can't clear — the
 headless scene boots clean, but GUI rendering/input wasn't run). Presentation is deliberate
 placeholder primitives (cylinders/cuboids/markers) per the dev plan's art bar.
+
+## PARKED — 2026-06-09
+
+Project **parked mid-flight** after the DEV_PLAN_2 *player-first QoL* phase. The proven T0→T5 sim
+(above) plus the playable bootstrap arc, the mouse-driven UX overhaul, and the build-&-grow flow are
+**merged to `main`** (PRs #7/#9/#11/#13/#15). **P2** (founder = citizen #0 + the food node + the
+ascension chain) is **built + machine-verified (234 tests, t0–t5 green) but NOT playtested/merged** —
+**PR #17 left open**, playtest **issue #18 open**, as the clean resume point. Phase retrospective:
+[docs/postmortems/colonygame-dev-plan-2.md](../postmortems/colonygame-dev-plan-2.md).
+
+**Resume here:** playtest P2 (#18) → merge or fix; then the open question (Research-Lab T3→T1 to make
+the ascension research-start clickable) and P3–P6 (feedback polish, build-mode polish, camera,
+day/night). Central lesson of the phase: **GUI/interaction can't be headless-verified** — the
+human playtest is the real gate (see the retrospective + the routed contract candidates).
 
 ## Decision log
 
