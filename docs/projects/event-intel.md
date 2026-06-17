@@ -2,7 +2,7 @@
 slug: event-intel
 repo: https://github.com/CKS-Equium/event-intel
 status: active
-phase: design
+phase: build
 created: 2026-06-17
 team: [orchestrator, product-manager, software-architect, senior-software-engineer, quality-engineer, reviewer-critic]
 board: n/a (token lacks project scope; using labels + milestones + issues)
@@ -20,12 +20,17 @@ why**, from the day's opening sessions. **Hard external deadline: Monday 2026-06
 
 ## Current state
 
-**Gate 1 PASSED (PRD approved 2026-06-17) — entering Design.** Repo created + seeded (PRD +
-scaffold). Next gate: **gate 2 (architecture approval)**. Seed issues: architecture+ADRs, planning.
-Build cadence: branch+PR per unit, self-merge on green DoD (no human-playtest gate — machine-
-verifiable, like new-cadair/colonygame). **Vision-LLM dossier is a v1 must-have (operator's call,
-higher deadline risk) → architect/engineer must prototype the vision dossier + smoke-test the
-Windows/CUDA local-model toolchain on day 1** to front-load the riskiest integration.
+**Gate 2 PASSED (architecture approved 2026-06-17) — in Build.** Day-1 spike on the real 5090 box
+returned **GO**: faster-whisper on CTranslate2 `cp314` (runs on Python 3.14, **no torch**, 14.6×
+realtime); vision via Ollama **`qwen3-vl:30b` already on disk** (zero download, GPU); ffmpeg
+scene-detect ≈ 1:1 slides; sample dossier had all 5 fields + read figures off slides the audio never
+said; **full 13-min session ≈ 4.7 min end-to-end** (target 1–2h / window 4–6h). The vision-required
+deadline risk is **retired with evidence**. Accuracy is **networking-grade** (slides shipped
+alongside) — operator-acknowledged. `sessions/` KB **auto-committed** (operator-approved). Build =
+harden the proven spike into the production pipeline + the `/remote-control` runbook + tests; branch+
+PR per unit, self-merge on green DoD. Next gate: build DoD → gate 4/5 (test+review) → release.
+Operator pre-Monday checklist: Whisper large-v3 warm-up (~1.5 GB), sleep off, wired ethernet,
+Tailscale+RDP backup.
 
 ## Decision log
 
