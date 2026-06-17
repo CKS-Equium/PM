@@ -2,7 +2,7 @@
 slug: event-intel
 repo: https://github.com/CKS-Equium/event-intel
 status: active
-phase: build
+phase: release
 created: 2026-06-17
 team: [orchestrator, product-manager, software-architect, senior-software-engineer, quality-engineer, reviewer-critic]
 board: n/a (token lacks project scope; using labels + milestones + issues)
@@ -31,6 +31,14 @@ harden the proven spike into the production pipeline + the `/remote-control` run
 PR per unit, self-merge on green DoD. Next gate: build DoD → gate 4/5 (test+review) → release.
 Operator pre-Monday checklist: Whisper large-v3 warm-up (~1.5 GB), sleep off, wired ethernet,
 Tailscale+RDP backup.
+
+**BUILD COMPLETE — ready for Monday (2026-06-17).** Pipeline built, reviewed (APPROVE w/ nits),
+hardened (file-quiescence + transcript-coverage guard against silent-truncation + robust label
+match), merged (PR #4, main `32ef786`). **67 tests green; real e2e on the NIIMBL sample 170s,
+transcript coverage 0.993, all 5 dossier fields.** Whisper large-v3 already cached (warm-up done
+during build). Remaining = operator-only: set `EVENT_INTEL_RECORDINGS_DIR` to the real OBS folder,
+liveness (sleep off / ethernet / Tailscale+RDP), start a `/remote-control` session before leaving.
+**Post-mortem after the event** (once used live Monday) — close the loop then.
 
 ## Decision log
 

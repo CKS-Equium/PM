@@ -17,6 +17,6 @@ is the control-plane index of those projects — metadata and links only, never 
 | [hearthflix](hearthflix.md) | shipped | release | [CKS-Equium/hearthflix](https://github.com/CKS-Equium/hearthflix) |
 | [colonygame](colonygame.md) | parked (DEV_PLAN_2 mid-flight) | build | [CKS-Equium/ColonyGame](https://github.com/CKS-Equium/ColonyGame) |
 | [new-cadair](new-cadair.md) | active (A/B experiment) | build | [CKS-Equium/new-cadair](https://github.com/CKS-Equium/new-cadair) |
-| [event-intel](event-intel.md) | active | design | [CKS-Equium/event-intel](https://github.com/CKS-Equium/event-intel) |
+| [event-intel](event-intel.md) | active | release (built, ready for Mon) | [CKS-Equium/event-intel](https://github.com/CKS-Equium/event-intel) |
 
 <!-- Regenerate this table from the frontmatter of each <slug>.md (excluding _template.md). -->
