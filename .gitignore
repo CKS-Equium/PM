@@ -1,0 +1,9 @@
+# Scratch / throwaway work (e.g. discovery spikes, preview artifacts) — never committed
+temp/
+
+# Local, machine-specific Claude Code config (additionalDirectories etc.) — not shared
+.claude/settings.local.json
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
