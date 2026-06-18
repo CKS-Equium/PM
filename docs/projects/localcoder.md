@@ -2,7 +2,7 @@
 slug: localcoder
 repo: https://github.com/CKS-Equium/localcoder
 status: active
-phase: design
+phase: build
 created: 2026-06-18
 team: [orchestrator, product-manager, software-architect, senior-software-engineer, quality-engineer, reviewer-critic]
 board: n/a (token lacks project scope; using labels + milestones + issues)
@@ -31,6 +31,15 @@ continuation; `nemotron-3-nano` is the fast toggle; OpenAI-API shape keeps the m
 
 ## Decision log
 
+- 2026-06-18 — **Gate 2 approved (architecture + plan).** Spike GO: in-code agent loop drove
+  list_dir→read_file→final on qwen3-coder via `/v1` (5.6s cold/1.1s warm, 100% GPU at 64k). ADRs
+  0001–0004 accepted. **Allowlist granularity:** write_file = per-path-prefix, run_command =
+  per-exact-command. **VRAM posture:** warn-not-cap (detect CPU spill from `/api/ps`, non-blocking).
+  Plan = 8 tickets #3→#10 (critical path to the AC11 end-to-end milestone); R15/streaming cut-first.
+- 2026-06-18 — **⚠️ BUILD CONSTRAINT (operator):** the GPU is in use elsewhere — **no live LLM/GPU
+  inference during the build.** All automated tests mock the Ollama client; any test needing the GPU
+  (AC3 live tool-calling, AC11 end-to-end, AC13 model swap) is **gated behind an explicit operator
+  ask** before running.
 - 2026-06-18 — **Gate 1 approved.** Name `localcoder`. Build from scratch (transparency/learning over
   forking Continue/Cline). Full tool set incl. `run_command`, gated by a Claude-Code-style permission
   layer. `run_command` guardrail = **approval-only** for v1 (single trusted local user).
