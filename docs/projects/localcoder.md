@@ -21,7 +21,18 @@ Approve/Deny/Always-allow; allowlist persisted; deny handled gracefully).
 
 ## Current state
 
-**Gate 1 PASSED (PRD approved 2026-06-18) — entering Design.** Repo created + seeded (PRD + scaffold).
+**BUILD + REVIEW COMPLETE — only the live-GPU verification remains (2026-06-18).** All 8 build
+tickets (#3→#10) merged; **119 mocked tests green**, typecheck + lint clean, zero GPU used (Ollama
+client mocked throughout, per the operator's GPU constraint). Reviewer-critic **APPROVE WITH NITS**;
+security-engineer **PASS WITH FINDINGS** — findings fixed (F1 crypto nonce, F2 shell-operator
+approval warning + risk R16, autoAcceptEdits logged-setter, missing-id correlation, VRAM re-warn),
+merged PR #20. The permission gate is verified as a real enforced trust boundary (not just UI).
+**Pending = the live ACs (AC1/AC3/AC11/AC13) — require the operator's GPU**: a backend live smoke
+(`node spike/agent-loop.mjs`) and the interactive end-to-end (F5 → panel → prompt → read→edit→run,
+all gated) per `docs/DEMO.md`. This is the human/live verification gate (operator-initiated, like a
+playtest). Gate 6 (release) after the live run passes.
+
+**(historical) Gate 1 PASSED (PRD approved 2026-06-18) — entering Design.** Repo created + seeded (PRD + scaffold).
 Backend settled with **live probes on the operator's RTX 5090**: `qwen3-coder:30b` @ `num_ctx 65536`
 runs 100% on GPU (~29 GB VRAM, ~271 tok/s) with clean native tool-calling + correct loop
 continuation; `nemotron-3-nano` is the fast toggle; OpenAI-API shape keeps the model a one-line swap.

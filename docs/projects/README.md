@@ -19,6 +19,6 @@ is the control-plane index of those projects — metadata and links only, never 
 | [new-cadair](new-cadair.md) | active (A/B experiment) | build | [CKS-Equium/new-cadair](https://github.com/CKS-Equium/new-cadair) |
 | [event-intel](event-intel.md) | active | release (built, ready for Mon) | [CKS-Equium/event-intel](https://github.com/CKS-Equium/event-intel) |
 
-| [localcoder](localcoder.md) | active | design | [CKS-Equium/localcoder](https://github.com/CKS-Equium/localcoder) |
+| [localcoder](localcoder.md) | active | build+review done (live-GPU verify pending) | [CKS-Equium/localcoder](https://github.com/CKS-Equium/localcoder) |
 
 <!-- Regenerate this table from the frontmatter of each <slug>.md (excluding _template.md). -->
