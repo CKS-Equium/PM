@@ -40,6 +40,20 @@ during build). Remaining = operator-only: set `EVENT_INTEL_RECORDINGS_DIR` to th
 liveness (sleep off / ethernet / Tailscale+RDP), start a `/remote-control` session before leaving.
 **Post-mortem after the event** (once used live Monday) — close the loop then.
 
+**LIVE INCIDENT + FIX (2026-06-23/24) — first real full-length session.** Processing the operator's
+first true 82-min session (vs the 170s build sample) exposed that the build's smoke test never
+exercised the long-context fusion path. Fusion broke four scale-dependent ways: (A) the fixed 16K
+`num_ctx` silently truncated the ~28K-token prompt → empty dossier; (B) a wider window made
+generation loop (185KB, every speaker ~10×); (C) **root cause** — `qwen3-vl` is an always-on
+reasoning model whose unbounded, unsuppressable `<think>` block (ollama `think:false` **and**
+`/no_think` both ignored) returned an **empty** response on ~1/3 of runs; (D) coverage variance.
+**Fix (branch `fix/fusion-long-session-hardening`, commit `ff67b4e`):** fusion is pure-text and never
+needed vision → moved to a **non-thinking text model** (`qwen3-coder:30b`, new `EVENT_INTEL_FUSION_MODEL`);
++ input-sized `num_ctx` with fail-loud ceiling, `num_predict` bound, deterministic speaker-block
+dedupe, and a "cover EVERY speaker" prompt. Tests 67→77; validated on the real session (0 empties,
+26–38 speakers). Residual: single-shot coverage still varies (re-run is safe/idempotent) — **two-pass
+roster-then-detail** is the proposed follow-up. Learnings recorded to SSE + QE `notes.md`.
+
 ## Decision log
 
 - 2026-06-17 — **Gate 1 approved.** Name `event-intel`; control surface = Claude Code
