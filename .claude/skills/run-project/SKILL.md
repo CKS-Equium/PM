@@ -1,6 +1,6 @@
 ---
 name: run-project
-description: Drives an active project through the lifecycle — Design → Build → Test → Review → Release → Post-mortem — by delegating each phase to the right agents and enforcing the gates in docs/gates.md. Use to advance or continue an in-flight project after its PRD is approved.
+description: Drives an active project through the lifecycle — Design → Build → Test → Review → Release → Post-mortem — by delegating each phase to the right agents and enforcing the gates in docs/gates.md. Use to advance or continue an in-flight project after its brief is approved (gate 1).
 ---
 
 # Run Project Skill
@@ -76,10 +76,15 @@ Senior → Junior chain runs through you:
    the ticket splits into **≥3 independent atomic tasks**, writes `docs/tasks/<ticket>.md` on the
    branch and returns without building.
 2. Spawn one `junior-software-engineer` **per task, in parallel** (one message, multiple Task calls),
-   each given only its task spec + the contracts it names.
-3. Send the Juniors' results back to the **same** Senior agent (continue it — do not start a fresh
-   one) for integration, self-review, and the gate-3 checklist.
-Below the threshold, the Senior builds directly; do not fan out for the sake of it.
+   each given only its task spec + the contracts it names, each on its own branch
+   `task/<ticket>-<n>` off the ticket branch (PR back into the ticket branch). The decomposition
+   names the shared files no task may touch.
+3. Send the Juniors' results back to the **same** Senior agent (continue it — it keeps its plan) for
+   integration, self-review, and the gate-3 checklist. If that agent is gone, spawn a fresh Senior:
+   it must be able to integrate from `docs/tasks/<ticket>.md` + the task branches alone.
+4. A Junior that returns a **gap** (spec insufficient, out-of-scope need) or fails: hand the gap to
+   the Senior, who revises that task's entry; re-spawn **only that task**. Never let a Junior improvise.
+Fewer than three tasks: the Senior builds directly; do not fan out for the sake of it.
 
 ### Phase 2: Check the gate
 
@@ -91,12 +96,14 @@ Verify the phase's **Definition of Done** in `docs/gates.md`.
 ### Phase 3: Human touchpoints (gate 2 FYI · gate 6 acceptance)
 
 Both surface on the dashboard's "Needs you" panel as **`needs-human` issues in the project repo**,
-assigned to the operator, body = summary + links to the artifacts.
+assigned to the operator, body = summary + links to the artifacts. Blocking items use a `🚦` prefix;
+informational items add the **`fyi`** label and an `ℹ️` prefix (gates.md "Async escalation").
 
 - **Gate 2 — FYI, non-blocking.** Open `ℹ️ Gate 2: architecture & design (FYI)` with the ADR / spec
   links, log it in the registry Decision log, and **proceed to Build without waiting**. If the
   operator later objects in the issue, treat it as a scope change (return to the Architect,
-  re-baseline the plan). Close the issue when Build starts or the operator acknowledges.
+  re-baseline the plan). Leave it **open until the operator acknowledges**, and **re-read it at the
+  gate-3 transition before merging Build** — that re-check is the guaranteed touchpoint.
 - **Gate 6 — final acceptance, blocking.** Open `🚦 Gate 6: final acceptance` with the release
   candidate, the evidence record, and — for player-facing / operator-driven products — the exact
   operator path or playtest to run. Wait.
@@ -141,7 +148,7 @@ is recorded.
 
 ## Edge Cases
 
-- **PRD not yet approved:** stop — use `start-project` (gate 1) first.
+- **Brief not yet approved:** stop — use `start-project` (gate 1) first.
 - **Gate fails repeatedly:** escalate to the human with the blocking finding; consider a waiver.
 - **Blocked on a dependency:** mark the issue `status:blocked`, surface it, work other ready phases.
 - **Scope change mid-flight:** route back to the Product Manager (PRD) and re-baseline the plan.

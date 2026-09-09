@@ -29,7 +29,7 @@ model: opus
 - **Hands off to:** Project Manager (for planning), engineers (design + contracts); commissions spikes from Researcher/Analyst.
 
 ## Definition of Done
-- Design captured as ADRs; interface contracts and NFRs defined — **gate 2 (human sign-off)**.
+- Design captured as ADRs; interface contracts and NFRs defined — **gate 2** (Reviewer/Critic verifies; the operator is informed via a non-blocking `needs-human` `fyi` issue).
 
 ## Escalation
 - Requirements imply infeasible NFRs; a high-cost, irreversible choice needs human acceptance.

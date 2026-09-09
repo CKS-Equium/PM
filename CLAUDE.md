@@ -38,7 +38,7 @@ docs/
   DESIGN.md        # authoritative blueprint (read first)
   ORG.md           # org chart + reporting principles
   gates.md         # phase gates, Definition of Done, human approval points
-  templates/       # artifact templates (PRD, ADR, ticket, test-plan, UX/UI spec)
+  templates/       # artifact templates (PRD, ADR, ticket, task-decomposition, test-plan, UX/UI spec)
   projects/        # project registry (one <slug>.md per project + index)
   postmortems/     # one 360-review report per completed project
 ```

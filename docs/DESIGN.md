@@ -66,8 +66,11 @@ Engineer, Quality Engineer, Reviewer/Critic — and adds roles only when the pro
 they own: Security Engineer (network / untrusted input / dependencies), UX + UI Designer (a user
 interface), Project Manager (more than ~10 tickets or multiple milestones), Researcher (an open
 technical question that gates a decision), DevOps (a deploy target beyond "run it locally"),
-Technical Writer (an external audience for docs), Junior Engineers (a feature that fans out into
-≥3 independent atomic tasks). Record the assigned team in the registry entry.
+Technical Writer (an external audience for docs), Junior Engineers (a fan-out, §4). Record the
+assigned team in the registry entry. **An unassigned role's DoD items do not vanish:** tickets →
+the Senior writes them from the Architect's plan; the gate-5 security review → the Reviewer/Critic
+runs the Security Engineer's standard checks; the gate-6 release → Senior + Orchestrator; docs →
+the Senior. Anything else is a logged waiver.
 
 ## 4. Substrate & file layout
 
@@ -95,13 +98,17 @@ Claude Code subagents **cannot spawn subagents**, so the only agent that delegat
 Orchestrator (the main session). The Senior → Junior chain in §3 is therefore a **fan-out through the
 Orchestrator**, not a nested call:
 
-1. The Orchestrator invokes the Senior with a ticket. If the ticket splits into **≥3 independent
-   atomic tasks**, the Senior writes the decomposition to the branch (`docs/tasks/<ticket>.md`, one
-   fully-specified task per entry, ticket-template shape) and returns without building.
+1. The Orchestrator invokes the Senior with a ticket. If the ticket splits into **three or more
+   independent atomic tasks**, the Senior writes the decomposition to the branch
+   (`docs/tasks/<ticket>.md`, from `docs/templates/task-decomposition-template.md`) and returns
+   without building. The file names the shared files no task may touch.
 2. The Orchestrator spawns **one Junior per task, in parallel**, each with only its task spec and the
-   contracts it needs.
+   contracts it needs, each on its own branch `task/<ticket>-<n>` off the ticket branch.
 3. The Orchestrator sends the Juniors' results back to the **same Senior agent** (continued, so it
-   keeps its plan and context) for integration, self-review, and the gate-3 checklist.
+   keeps its plan) for integration, self-review, and the gate-3 checklist. If that agent is gone, a
+   fresh Senior integrates from the decomposition file + the task branches — the file must make that
+   possible (the interruption-tolerance rule in gates.md). A Junior that returns a gap goes back to
+   the Senior for a revised entry; only that task is re-spawned.
 
 Below the fan-out threshold the Senior simply builds the ticket itself; the Junior tier exists for
 parallelism and cost, not capability. The decomposition file is the handoff artifact — it must be
@@ -194,7 +201,7 @@ is the gate on every PR (**BLOCK = fix-before-merge**), and the run proceeds aut
 **plan-complete-needs-playtest** or a hard blocker — **branch + PR per gate, self-merged on a green
 DoD, gate branches kept as checkpoints**. Gate 6 is the **final playtest / acceptance**. Entry point:
 `start-project` with a design + plan instead of an intent (it skips the interview); `run-project`
-detects the plan and drives from it. First instance: **colonygame**; since then the majority mode.
+detects the plan and drives from it. First instance: **colonygame**.
 
 ## 8. Model tiering
 
@@ -202,7 +209,8 @@ Set per agent via the `model:` frontmatter; tunable per project. *(Revised 2026-
 
 - **Fable** (highest judgment, reads everything): **Orchestrator** — independent gate verification,
   recovery when a delegate dies, the only agent that sees the whole board; **Reviewer/Critic** —
-  adversarial review is where every gate-5 defect so far was caught, and it reads a diff, not a
+  adversarial review caught five shippable defects on new-cadair that green suites missed, and it
+  reads a diff, not a
   project, so it is the cheapest place to buy correctness.
 - **Opus** (senior judgment): Process Engineer, Product Manager, Software Architect, Senior Software
   Engineer.

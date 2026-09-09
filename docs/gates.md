@@ -90,9 +90,11 @@ Visibility is kept; the stop is not.)*
 
 **Architecture (gate 2) is surfaced, not blocked on.** The Orchestrator opens a `needs-human` issue
 titled `ℹ️ Gate 2: architecture & design (FYI)` with the ADR links and **proceeds to Build without
-waiting**. The operator can comment to redirect at any time; an objection is treated as a scope change
-(route back to the Architect and re-baseline). This keeps the dashboard's "Needs you" panel honest
-while removing the stop.
+waiting**. The FYI stays **open until the operator acknowledges it**, and the Orchestrator **re-reads it
+at the gate-3 transition before merging Build** — an objection posted there is a scope change (route
+back to the Architect and re-baseline). That re-check is the guaranteed touchpoint until the
+scheduled-resume routine exists. This keeps the dashboard's "Needs you" panel honest while removing
+the stop.
 
 **Reviewer BLOCK = fix-before-merge, not a human stop.** Between the two human gates, the adversarial
 review is the quality gate on every PR: a BLOCK returns the work to the author and the fix is re-reviewed;
@@ -105,7 +107,9 @@ kickoff — so it has no board item.)
 ### Async escalation (`needs-human`)
 
 Outside the two human gates, any agent that needs a human decision opens a **GitHub issue labelled
-`needs-human`** in the project repo, assigned to the operator, and the work waits. The operator
+`needs-human`** in the project repo, assigned to the operator, and the work waits (`🚦` title prefix).
+**Informational** items — the gate-2 FYI — carry the additional label **`fyi`** and an `ℹ️` prefix; the
+work does **not** wait on them, but they stay open until acknowledged. The operator
 answers **in the issue**; an always-on scheduled Orchestrator routine (~5 min) detects the answer
 and resumes the agent. This keeps escalation **durable and asynchronous** (it survives session
 restarts) rather than blocking on a live prompt. The dashboard's "Needs you" panel surfaces these.

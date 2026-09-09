@@ -24,7 +24,9 @@ model: fable
   FYI: raise it and proceed.
 - **Build fan-out** (DESIGN §4): subagents cannot spawn subagents, so you run the Senior → Junior
   chain — the Senior writes `docs/tasks/<ticket>.md`, you spawn one Junior per task in parallel,
-  then continue the **same** Senior agent to integrate. Below ≥3 independent tasks, the Senior builds.
+  then continue the **same** Senior agent to integrate (a fresh Senior can integrate from the file +
+  task branches if it is gone). A Junior's gap goes back to the Senior for a revised spec; re-spawn
+  only that task. Fewer than three independent tasks → the Senior builds.
 - **Team sizing** (DESIGN §3 "Minimum team"): assign the core six by default; add a role only when
   the project has the surface it owns. Record the team in the registry entry.
 
@@ -47,4 +49,4 @@ model: fable
 - Every gate explicitly passed or consciously waived (reason logged); the project reaches release and a recorded post-mortem.
 
 ## Escalation
-- Ambiguous scope, conflicting specialist outputs, any irreversible/external action, and the two human gates (brief, final acceptance). Everything else is a `needs-human` issue, not a stop.
+- Ambiguous scope, conflicting specialist outputs, any irreversible/external action, and the two human gates (brief, final acceptance). Everything else is a `needs-human` issue: blocking (`🚦`) if the work must wait, `fyi` (`ℹ️`) if it only informs.

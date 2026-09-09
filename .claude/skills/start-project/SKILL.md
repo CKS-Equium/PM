@@ -107,7 +107,8 @@ the next session.
 State lives in the **project** repo (see DESIGN §6).
 
 - **Labels:** `role:*` (one per assigned role), `status:*` (`blocked`, `in-progress`, `review`),
-  `phase:*` (`discovery`…`release`), and `needs-human` (agent → operator escalations).
+  `phase:*` (`discovery`…`release`), `needs-human` (agent → operator escalations) and `fyi`
+  (informational `needs-human` items that do not block — gates.md).
 - **Milestones:** one per phase — Discovery, Design, Build, Test, Review, Release.
 - **Board (optional):** a GitHub Project with columns = phases (needs the `project` token scope).
 - **Seed issues** (minimal and dependency-ordered, from `docs/templates/ticket-template.md`):
@@ -115,6 +116,8 @@ State lives in the **project** repo (see DESIGN §6).
   2. `Plan & break down into tickets` — `role:project-manager`, depends on #1.
 
   Do **not** pre-seed the whole backlog — the Project Manager grows it after architecture.
+  **Execution mode:** seed instead the plan's **first gate** as a ticket (`role:senior-software-engineer`)
+  and a `needs-human` + `fyi` issue linking the confirmed brief.
 - **Issue-closing convention:** close delivered tickets **programmatically after merge** (a
   `gh issue close` loop), not via PR-body `Closes #N` keywords — those are unreliable for multiple
   issues (proven across two projects). Reference issues in the PR body for traceability only.
@@ -136,7 +139,7 @@ git commit -m "chore: register project <slug>"
   Registry: docs/projects/<slug>.md
   Board:    <url>
   Seeded:   issues (architecture, planning)
-  Gate 1:   ✅ PRD approved
+  Gate 1:   ✅ Brief approved
 
 Next: Software Architect (design phase) → run-project <slug>.
       (execution mode: Build starts directly → run-project <slug>)
