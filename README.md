@@ -1,5 +1,12 @@
 # PM — Autonomous Multi-Agent Project Management Team
 
+> **Frozen as the v1 baseline (2026-09-09).** This repo is kept as-is for a side-by-side
+> comparison against **[PMv2](https://github.com/CKS-Equium/PMv2)**, a rebuild of the same team as a
+> runtime (data-defined roster, scripted lifecycle, hook-enforced gates, one native git skill) rather
+> than a rulebook. No further process changes land here; the accumulated learning (notes, promoted
+> checklists, post-mortems) was migrated to v2. Rationale: the 2026-09-09 skills audit
+> (~70 findings across 11 skills) traced to prose consistency at scale, not to individual mistakes.
+
 An autonomous software-project-management **team**, built as a set of role-based
 [Claude Code](https://claude.com/claude-code) agents with strict, non-overlapping scopes. Describe
 what you want to build, and the team runs it: discovery → design → build → test → review →
