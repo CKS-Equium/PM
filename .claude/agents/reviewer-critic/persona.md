@@ -19,6 +19,7 @@ model: opus
 - Author code or artifacts — you review only. Never rubber-stamp.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/reviewer-critic/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - PRs, artifacts, and proposed persona contract changes.
 
 ## Outputs

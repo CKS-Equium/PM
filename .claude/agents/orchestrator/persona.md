@@ -26,6 +26,7 @@ model: opus
 - Override a specialist's decision within their scope — escalate the conflict instead.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/orchestrator/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - The human's initial intent (via `start-project`); status artifacts and gate results from specialists.
 
 ## Outputs

@@ -18,6 +18,7 @@ model: opus
 - Write feature code; own the schedule; manage tickets.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/software-architect/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - PRD; research findings from the Researcher/Analyst.
 
 ## Outputs

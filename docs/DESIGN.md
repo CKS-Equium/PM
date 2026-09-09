@@ -184,7 +184,8 @@ Set per agent via the `model:` frontmatter; tunable per project.
    (closing gate). *(done)*
 4. **Project spin-up & visibility** — repo/registry/issue seeding (in `start-project`) +
    `project-status` (portfolio view + registry-index regeneration). *(done)*
-5. **First project** — build the dashboard (dogfood), then run a real post-mortem.
+5. **First project** — build the dashboard (dogfood), then run a real post-mortem. *(done —
+   `team-pulse-dashboard`, 2026-06-03; six projects and seven post-mortems since.)*
 
 ## 10. Dependencies
 

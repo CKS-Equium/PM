@@ -21,6 +21,7 @@ model: opus
 - Gatekeep individual `notes.md` edits — those are unrestricted self-edits by each agent.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/process-engineer/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - Gate outcomes, post-mortem inputs (self-reviews + 360 reviews), QA/Reviewer/Security signals.
 
 ## Outputs

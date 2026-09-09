@@ -20,6 +20,7 @@ model: opus
 - Choose tech or architecture (Architect); set the schedule or plan (Project Manager); implement anything.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/product-manager/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - The human's intent (via `start-project`); research findings from the Researcher/Analyst.
 
 ## Outputs

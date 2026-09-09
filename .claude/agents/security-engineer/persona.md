@@ -18,6 +18,7 @@ model: sonnet
 - Own functional correctness (that's QA); author feature code.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/security-engineer/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - Architecture/ADRs, diffs, dependency manifests.
 
 ## Outputs

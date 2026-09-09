@@ -1,8 +1,8 @@
 ---
 slug: colonygame
 repo: https://github.com/CKS-Equium/ColonyGame
-status: parked
-phase: build (DEV_PLAN_2 player-first QoL, paused mid-flight)
+status: paused
+phase: build            # DEV_PLAN_2 player-first QoL, parked mid-flight — see Current state
 created: 2026-06-07
 team: [orchestrator, software-architect, senior-software-engineer, quality-engineer, reviewer-critic]
 board: n/a
