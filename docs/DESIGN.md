@@ -46,7 +46,7 @@ Hierarchical delegation: **Human → Orchestrator → leads → workers.** Full 
 | Product | **Project Manager** | Plan, milestones, tickets, dependencies, risk, status | Define requirements or implementation |
 | Product | **Researcher / Analyst** | Spikes, option/library evaluations, findings | Make the final call (informs, doesn't decide) |
 | Engineering | **Software Architect** (Tech Lead) | System design, ADRs, interface contracts, NFRs, stack | Write feature code or own schedule |
-| Engineering | **Senior Software Engineer** | Complex, multi-step features; decomposes & spawns juniors | Change architecture without Architect sign-off |
+| Engineering | **Senior Software Engineer** | Complex, multi-step features; decomposes into atomic task specs (the Orchestrator spawns the Juniors) | Change architecture without Architect sign-off; spawn agents |
 | Engineering | **Junior Software Engineer** | One atomic, fully-specified task | Make design decisions / touch unrelated code |
 | Quality | **Quality Engineer** (QA) | Test strategy, test cases, automated tests, verification | Write feature code |
 | Quality | **Reviewer / Critic** | Adversarial review of diffs & artifacts | Author code (reviews only) |
@@ -59,6 +59,19 @@ Hierarchical delegation: **Human → Orchestrator → leads → workers.** Full 
 **Independence:** Quality / Reviewer / Security report to the Orchestrator, **not** to the
 engineers they review. The Process Engineer is a staff function (advises the Orchestrator,
 improves every persona) — it is not in the delivery chain.
+
+**Minimum team.** The 15 roles are the org, not the roster for every project. The Orchestrator
+assigns the **core six** by default — Orchestrator, Product Manager, Software Architect, Senior
+Engineer, Quality Engineer, Reviewer/Critic — and adds roles only when the project has the surface
+they own: Security Engineer (network / untrusted input / dependencies), UX + UI Designer (a user
+interface), Project Manager (more than ~10 tickets or multiple milestones), Researcher (an open
+technical question that gates a decision), DevOps (a deploy target beyond "run it locally"),
+Technical Writer (an external audience for docs), Junior Engineers (a fan-out, §4). Record the
+assigned team in the registry entry. **An unassigned role's DoD items do not vanish:** tickets →
+the Senior writes them from the Architect's plan; the gate-5 security review → the Reviewer/Critic
+runs the Security Engineer's standard checks; the gate-6 release → the Senior authors the release artifacts and the Orchestrator runs the
+git/release skills (it authors nothing); docs →
+the Senior. Anything else is a logged waiver.
 
 ## 4. Substrate & file layout
 
@@ -75,10 +88,32 @@ docs/
   DESIGN.md        # this file
   ORG.md           # org chart
   gates.md         # phase gates, DoD, human approval points
-  templates/       # artifact templates (PRD, ADR, ticket, test-plan, UX/UI spec)
+  templates/       # artifact templates (PRD, ADR, ticket, task-decomposition, test-plan, UX/UI spec)
   projects/        # registry — one <slug>.md per project + auto-generated index
   postmortems/     # one <slug>.md 360-review report per completed project
 ```
+
+### Delegation depth: one level
+
+Claude Code subagents **cannot spawn subagents**, so the only agent that delegates at runtime is the
+Orchestrator (the main session). The Senior → Junior chain in §3 is therefore a **fan-out through the
+Orchestrator**, not a nested call:
+
+1. The Orchestrator invokes the Senior with a ticket. If the ticket splits into **three or more
+   independent atomic tasks**, the Senior writes the decomposition to the branch
+   (`docs/tasks/<ticket>.md`, from `docs/templates/task-decomposition-template.md`) and returns
+   without building. The file names the shared files no task may touch.
+2. The Orchestrator spawns **one Junior per task, in parallel**, each with only its task spec and the
+   contracts it needs, each on its own branch `task/<ticket>-<n>` off the ticket branch.
+3. The Orchestrator sends the Juniors' results back to the **same Senior agent** (continued, so it
+   keeps its plan) for integration, self-review, and the gate-3 checklist. If that agent is gone, a
+   fresh Senior integrates from the decomposition file + the task branches — the file must make that
+   possible (the interruption-tolerance rule in gates.md). A Junior that returns a gap goes back to
+   the Senior for a revised entry; only that task is re-spawned.
+
+Below the fan-out threshold the Senior simply builds the ticket itself; the Junior tier exists for
+parallelism and cost, not capability. The decomposition file is the handoff artifact — it must be
+readable by a fresh agent, because that is exactly who reads it.
 
 ### Persona contract template
 
@@ -147,8 +182,10 @@ human intent
 ```
 
 - **Gates & DoD** between every phase, owned by the Process Engineer — see [gates.md](gates.md).
-- **Human-in-the-loop** at exactly three high-leverage, hard-to-reverse points: **PRD approval**,
-  **architecture approval**, **release**. Everything between runs autonomously.
+- **Human-in-the-loop** at exactly two points: **brief approval** (gate 1) and **final acceptance**
+  (gate 6 — release, or the playtest / operator-path run). Architecture is surfaced as a
+  non-blocking `needs-human` FYI. Everything between runs autonomously with the Reviewer/Critic as
+  the gate (BLOCK = fix-before-merge). See [gates.md](gates.md).
 - **Post-mortem = the closing gate.** A project isn't "done" until it's recorded. Two stages:
   1. **Self-review** — each agent assesses itself (positive + negative) → its own `notes.md`.
   2. **360 review** — each agent reviews collaborators **up and down its chain** (scoped to
@@ -158,23 +195,32 @@ human intent
 
 ### Execution mode: running an operator-authored dev plan
 
-A second, first-class lifecycle alongside the 7-gate flow. When the operator supplies an existing
-design **and** a gated dev plan, the team **executes** it rather than running discovery/design. The
-**project's own per-gate Definition of Done plus an adversarial reviewer-as-gate replace the 7
-gates**: a reviewer **BLOCK = fix-before-merge, not a human stop**. The run proceeds autonomously
-until **plan-complete-needs-playtest** or a hard blocker — **branch + PR per gate, self-merged on a
-green DoD, gate branches kept as checkpoints**. The only human gate is the **final
-playtest/acceptance**, not the intermediate gates. First instance: **colonygame**.
+The same lifecycle with Discovery and Design already done. When the operator supplies an existing
+design **and** a gated dev plan, gate 1 confirms them as the brief and the team **executes** the
+plan: the **project's own per-gate Definition of Done** stands in for gates 2–5, the Reviewer/Critic
+is the gate on every PR (**BLOCK = fix-before-merge**), and the run proceeds autonomously until
+**plan-complete-needs-playtest** or a hard blocker — **branch + PR per gate, self-merged on a green
+DoD, gate branches kept as checkpoints**. Gate 6 is the **final playtest / acceptance**. Entry point:
+`start-project` with a design + plan instead of an intent (it skips the interview); `run-project`
+detects the plan and drives from it. First instance: **colonygame**.
 
 ## 8. Model tiering
 
-Set per agent via the `model:` frontmatter; tunable per project.
+Set per agent via the `model:` frontmatter; tunable per project. *(Revised 2026-09-09.)*
 
-- **Opus** (judgment / senior): Orchestrator, Process Engineer, Product Manager, Software
-  Architect, Senior Software Engineer, Reviewer/Critic.
-- **Sonnet:** Project Manager, Researcher/Analyst, Quality Engineer, Security Engineer, UX
-  Designer, UI Designer, DevOps/Release Engineer, Technical Writer.
-- **Haiku:** Junior Software Engineer (atomic, well-specified tasks).
+- **Fable** (highest judgment, reads everything): **Orchestrator** — independent gate verification,
+  recovery when a delegate dies, the only agent that sees the whole board; **Reviewer/Critic** —
+  adversarial review caught five shippable defects on new-cadair that green suites missed, and it
+  reads a diff, not a
+  project, so it is the cheapest place to buy correctness.
+- **Opus** (senior judgment): Process Engineer, Product Manager, Software Architect, Senior Software
+  Engineer.
+- **Sonnet:** Project Manager, Researcher/Analyst, Quality Engineer, Security Engineer, UX Designer,
+  UI Designer, DevOps/Release Engineer, Technical Writer, **Junior Software Engineer** (atomic tasks
+  are rarely as atomic as a Haiku tier assumed; Sonnet asks rather than guesses).
+
+The Orchestrator is normally the **main session**, so its frontmatter only applies when it is spawned
+as a subagent — in practice "Orchestrator = Fable" means running the session on Fable.
 
 ## 9. Build order
 

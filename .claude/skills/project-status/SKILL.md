@@ -44,8 +44,8 @@ the current phase (per `docs/gates.md`).
     Repo: CKS-Equium/customer-portal · 4 open issues (1 blocked) · 2 PRs
     Blocked: #12 awaiting API contract
 
-▷ marketing-site       proposed  phase: discovery next: gate 1 (PRD approval)
-    Repo: — · awaiting PRD sign-off
+▷ marketing-site       proposed  phase: discovery next: gate 1 (brief approval)
+    Repo: — · awaiting brief sign-off
 
 ✓ internal-dashboard   shipped   phase: release   post-mortem: recorded
     Repo: CKS-Equium/internal-dashboard
@@ -59,7 +59,7 @@ Phase 1 — one row per project (Project · Status · Phase · Repo). Leave the 
 ### Phase 5: Suggest the next action per project
 
 Map state → action, e.g.:
-- `proposed` → "awaiting PRD approval (gate 1)".
+- `proposed` → "awaiting brief approval (gate 1)".
 - `active` → "`run-project <slug>` to advance" (or "unblock #N" if blocked).
 - `shipped` without a post-mortem → "`run-postmortem <slug>`".
 

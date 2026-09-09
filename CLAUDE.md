@@ -38,7 +38,7 @@ docs/
   DESIGN.md        # authoritative blueprint (read first)
   ORG.md           # org chart + reporting principles
   gates.md         # phase gates, Definition of Done, human approval points
-  templates/       # artifact templates (PRD, ADR, ticket, test-plan, UX/UI spec)
+  templates/       # artifact templates (PRD, ADR, ticket, task-decomposition, test-plan, UX/UI spec)
   projects/        # project registry (one <slug>.md per project + index)
   postmortems/     # one 360-review report per completed project
 ```
@@ -50,10 +50,16 @@ docs/
   `persona.md` (all 15 exist under `.claude/agents/<role>/`); DESIGN.md §3 is the summary view.
 - **Two-file agents.** `notes.md` is freely self-edited; `persona.md` (the contract) changes
   **only via a reviewed PR** — convention + Reviewer/human approval, no enforcement hook.
-- **Model tiering** (DESIGN.md §8): Opus for the six senior/judgment roles, Sonnet for the mid
-  tier, Haiku for the Junior Engineer. Set per agent via `model:` frontmatter.
-- **Human-in-the-loop** at exactly three gates: PRD approval, architecture approval, release
-  (gates.md). Autonomy runs free between them.
+- **Model tiering** (DESIGN.md §8): Fable for the Orchestrator and Reviewer/Critic, Opus for the
+  other senior/judgment roles, Sonnet for the mid tier and the Junior Engineer. Set per agent via
+  `model:` frontmatter.
+- **Human-in-the-loop** at exactly two gates: brief approval (gate 1) and final acceptance (gate 6).
+  Architecture is surfaced as a non-blocking `needs-human` FYI. Between the gates the Reviewer/Critic
+  is the gate on every PR: BLOCK = fix-before-merge (gates.md).
+- **Execution mode** (DESIGN.md §7): when the operator supplies a design + dev plan, gate 1 confirms
+  it as the brief and the project's own per-gate DoD stands in for gates 2–5.
+- **Delegation depth is one level** (DESIGN.md §4): subagents cannot spawn subagents. The Senior
+  writes a decomposition; the Orchestrator fans out Juniors and returns results to the same Senior.
 - **Templates are the contracts between roles** — when changing what an agent produces/consumes,
   update the matching template in `docs/templates/` so the handoff stays consistent.
 - **Cross-document consistency:** the roster, scopes, gates, model tiering, and lifecycle appear

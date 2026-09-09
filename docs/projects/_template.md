@@ -6,6 +6,7 @@ phase: discovery          # discovery → design → build → test → review �
 created: <YYYY-MM-DD>
 team: [orchestrator, product-manager]   # roles currently assigned/active
 board: <github project url>             # optional
+mode: discovery                         # discovery (PRD-led) | execution (operator-supplied design + dev plan)
 ---
 
 ## Summary

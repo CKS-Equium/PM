@@ -36,9 +36,10 @@ Human / Sponsor
   the **Orchestrator**, never to the engineers whose work they assess. This keeps review honest.
 - **Process Engineer is staff, not line.** It sits beside the Orchestrator (dotted line), advises
   on process, and owns the gates and the persona-improvement loop — it does no project work itself.
-- **Senior vs Junior split = scope of decision.** The Senior Engineer decomposes a feature and
-  spawns Juniors; a Junior executes exactly one atomic, fully-specified task and makes no design
-  calls.
+- **Senior vs Junior split = scope of decision.** The Senior Engineer decomposes a feature into
+  atomic task specs; the **Orchestrator** spawns the Juniors (subagents cannot spawn subagents — see
+  DESIGN §4 "Delegation depth") and returns their results to the Senior for integration. A Junior
+  executes exactly one atomic, fully-specified task and makes no design calls.
 - **Delegation only flows down; escalation only flows up.** No agent reaches across the chart to
   another's lane — conflicts escalate to the nearest common parent (usually the Orchestrator).
 

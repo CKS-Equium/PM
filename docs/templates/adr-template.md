@@ -5,7 +5,7 @@
 
 - **Status:** proposed
 - **Date:** <YYYY-MM-DD>
-- **Deciders:** Architect (+ human at gate 2)
+- **Deciders:** Architect (Reviewer/Critic verifies at gate 2; operator informed via the gate-2 FYI issue)
 
 ## Context
 The forces at play: requirements (link PRD), constraints, NFRs, what makes this decision necessary.

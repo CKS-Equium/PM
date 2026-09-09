@@ -10,12 +10,12 @@ Legend: 👤 = **human approval required** before passing.
 
 | # | Gate (exit of phase) | Definition of Done | Owner verifies |
 |---|---|---|---|
-| 1 | **Discovery → Design** 👤 | PRD exists with user problem, scope, and **testable** acceptance criteria; open questions resolved or logged | Product Manager → **human signs off** |
-| 2 | **Design → Build** 👤 | Architecture documented as ADRs; interface contracts + NFRs defined; UX flows and UI specs approved; plan broken into tickets with dependencies | Architect + Design → **human signs off** |
+| 1 | **Discovery → Design** 👤 | The **brief** is approved: PRD (or, in execution mode, the operator's design + dev plan) exists with user problem, scope, and **testable** acceptance criteria; open questions resolved or logged | Product Manager → **human approves the brief** |
+| 2 | **Design → Build** | Architecture documented as ADRs; interface contracts + NFRs defined; UX flows and UI specs reviewed; plan broken into tickets with dependencies | Architect + Design → Reviewer/Critic verifies; Orchestrator raises a **non-blocking `needs-human` FYI** with the ADR links and proceeds |
 | 3 | **Build → Test** | All planned tickets implemented; code compiles/builds; self-review done; no `TODO`/stub in delivered scope; **secure-by-default baseline met** (security headers/CSP, dependency CVE audit, non-root container, no unbounded wait-states — see the senior-engineer contract) | Senior Engineer |
 | 4 | **Test → Review** | Test plan executed; acceptance criteria verified; coverage meets project threshold; no failing tests; **traceability matrix complete** — every requirement/AC traced to ≥1 test and a source location (see below) | Quality Engineer |
 | 5 | **Review → Release** | Adversarial review passed (correctness + simplicity); **failure-mode pass run on any safety/data-integrity-relevant change** (see below); security review clean; no unresolved high-severity findings | Reviewer/Critic + Security Engineer |
-| 6 | **Release** 👤 | CI green; build/deploy succeeds; changelog + user docs updated; rollback path known | DevOps → **human signs off** |
+| 6 | **Release** 👤 | CI green; build/deploy succeeds; changelog + user docs updated; rollback path known; the operator has exercised the primary entry path (or a playtest, for player-facing work) | DevOps → **human final acceptance** |
 | 7 | **Post-mortem (closing gate)** | Self-reviews + 360 reviews complete; improvement recommendations recorded and routed (notes commits / contract PRs) | Process Engineer |
 
 ### Data-driven / authored-content projects
@@ -78,21 +78,40 @@ human takes.")*
 
 ## Human-in-the-loop
 
-Autonomy runs freely *between* gates. Humans are inserted only at the three high-leverage,
-hard-to-reverse decisions:
+Autonomy runs freely *between* gates. Humans are inserted at exactly **two** points — the brief and
+the final acceptance. *(Reduced from three on 2026-09-09: on all four projects that ran the architecture gate
+it was approved as presented, and every project since hearthflix has self-merged on green DoD.
+Visibility is kept; the stop is not.)*
 
-1. **PRD approval** (gate 1) — are we building the right thing?
-2. **Architecture approval** (gate 2) — the expensive-to-undo decision.
-3. **Release** (gate 6) — the irreversible, outward-facing action.
+1. **Brief approval** (gate 1) — are we building the right thing? For a discovery project this is the
+   PRD; in execution mode it is the operator's own design + dev plan, confirmed as the brief.
+2. **Final acceptance** (gate 6) — the irreversible, outward-facing action. Release, or for
+   player-facing / operator-driven work, the human playtest / operator-path run.
 
-Gates 2 and 6 (post-repo) are **raised as a `needs-human` issue on the project board** by the
-Orchestrator and closed on approval, so they appear in the dashboard's "Needs you" panel. (Gate 1
-is pre-repo — an interactive kickoff — so it has no board item.)
+**Architecture (gate 2) is surfaced, not blocked on.** The Orchestrator opens a `needs-human` issue
+titled `ℹ️ Gate 2: architecture & design (FYI)` with the ADR links and **proceeds to Build without
+waiting**. The FYI stays **open until the operator acknowledges it**, and the Orchestrator **re-reads it
+at the gate-3 transition before merging Build** — an objection posted there is a scope change (route
+back to the Architect and re-baseline). That re-check is the guaranteed touchpoint until the
+scheduled-resume routine exists. This keeps the dashboard's "Needs you" panel honest while removing
+the stop.
+
+**Reviewer BLOCK = fix-before-merge, not a human stop.** Between the two human gates, the adversarial
+review is the quality gate on every PR: a BLOCK returns the work to the author and the fix is re-reviewed;
+it never escalates to the human unless the disagreement is unresolvable (→ Orchestrator → human).
+
+Gate 6 is **raised as a `needs-human` issue on the project board** by the Orchestrator and closed on
+approval, so it appears in the dashboard's "Needs you" panel. (Gate 1 is pre-repo — an interactive
+kickoff — so it has no board item.)
 
 ### Async escalation (`needs-human`)
 
-Outside the three gates, any agent that needs a human decision opens a **GitHub issue labelled
-`needs-human`** in the project repo, assigned to the operator, and the work waits. The operator
+Outside the two human gates, any agent that needs a human decision opens a **GitHub issue labelled
+`needs-human`** in the project repo, assigned to the operator, and the work waits (`🚦` title prefix).
+**Informational** items — the gate-2 FYI — carry the additional label **`fyi`** and an `ℹ️` prefix; the
+work does **not** wait on them, but they stay open until acknowledged — so an unacknowledged FYI sits
+in "Needs you" for the whole Build (the dashboard should render `fyi` distinctly; follow-up ticket
+for team-pulse-dashboard). The operator
 answers **in the issue**; an always-on scheduled Orchestrator routine (~5 min) detects the answer
 and resumes the agent. This keeps escalation **durable and asynchronous** (it survives session
 restarts) rather than blocking on a live prompt. The dashboard's "Needs you" panel surfaces these.
@@ -107,10 +126,10 @@ come (a `schedule`-skill cron job) — until then, escalations are checked manua
   upstream (e.g. a Review finding that traces to a bad requirement → back to Discovery).
 - Gate outcomes are signals for the post-mortem and the self-improvement loop (see
   [DESIGN.md](DESIGN.md) §5, §7).
-- **Execution mode** is a first-class alternative to these 7 gates: when the operator supplies a
-  design + a gated dev plan, the project's own per-gate DoD and an adversarial reviewer-as-gate
-  replace them (reviewer BLOCK = fix-before-merge, not a human stop; the final playtest is the only
-  human gate). See [DESIGN.md](DESIGN.md) §7, "Execution mode."
+- **Execution mode** is the same lifecycle with Discovery and Design already done by the operator:
+  gate 1 confirms the supplied design + dev plan as the brief, gates 2–5 use the **project's own
+  per-gate DoD** with the Reviewer/Critic as the gate, and gate 6 is the final playtest / acceptance.
+  See [DESIGN.md](DESIGN.md) §7, "Execution mode."
 
 ### Playtest-gated / player-facing work
 
