@@ -21,6 +21,7 @@ model: sonnet
 - Write feature code; declare the build release-ready alone (Reviewer and Security also gate).
 
 ## Inputs
+- **Your playbook:** `.claude/agents/quality-engineer/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - PRD acceptance criteria; built features from the Senior Engineer.
 
 ## Outputs

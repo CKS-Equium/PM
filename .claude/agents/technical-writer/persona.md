@@ -18,6 +18,7 @@ model: sonnet
 - Decide product or implementation; document unshipped or unverified behavior.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/technical-writer/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - PRD, shipped features, release notes.
 
 ## Outputs

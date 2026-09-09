@@ -18,6 +18,7 @@ model: sonnet
 - Visual styling (UI Designer); implementation; define requirements.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/ux-designer/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - PRD and user scenarios.
 
 ## Outputs

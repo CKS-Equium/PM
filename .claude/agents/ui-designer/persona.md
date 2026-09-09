@@ -18,6 +18,7 @@ model: sonnet
 - Define flows or information architecture (UX Designer); write application logic.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/ui-designer/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - UX spec; brand / existing design system.
 
 ## Outputs

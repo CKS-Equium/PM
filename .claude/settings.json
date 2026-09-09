@@ -7,11 +7,11 @@
       "Write",
       "WebFetch",
       "WebSearch",
-      "Bash",
-      "PowerShell",
-      "Edit(.claude/agents/**/notes.md)"
+      "Bash"
     ],
     "ask": [
+      "Edit(.claude/agents/**/persona.md)",
+      "Write(.claude/agents/**/persona.md)",
       "Bash(git push --force:*)",
       "Bash(git push -f:*)",
       "Bash(git push --force-with-lease:*)",

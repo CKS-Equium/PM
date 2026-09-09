@@ -20,6 +20,7 @@ model: sonnet
 - Define requirements (Product); make architecture/implementation decisions; write code.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/project-manager/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - PRD, architecture/ADRs, team capacity.
 
 ## Outputs

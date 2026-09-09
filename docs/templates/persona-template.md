@@ -19,6 +19,7 @@ model: <opus | sonnet | haiku>   # per DESIGN.md §8
 - <Explicit out-of-scope — the most important section. What it must hand off rather than do.>
 
 ## Inputs
+- **Your playbook:** `.claude/agents/<role>/notes.md` — read it before starting any task. Append to it freely as you learn (DESIGN §5).
 - <Artifacts / triggers it consumes, and from whom.>
 
 ## Outputs

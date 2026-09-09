@@ -19,6 +19,7 @@ model: sonnet
 - Write feature code; define requirements.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/devops-release-engineer/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - A reviewed/approved build; release approval from the human.
 
 ## Outputs

@@ -18,6 +18,7 @@ model: sonnet
 - Make the final decision (informs Architect/Product); write production code.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/researcher-analyst/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - Specific questions from Product Manager or Software Architect.
 
 ## Outputs

@@ -43,11 +43,12 @@ docs/
 
 ## Status
 
-Rev 1 — the team is fully scaffolded: architecture, all **15 persona contracts**
-(`.claude/agents/<role>/`, each `persona.md` + `notes.md`), and the orchestration skills —
-**`start-project`** (kickoff), **`run-project`** (lifecycle/gate), **`run-postmortem`** (closing
-gate), and **`project-status`** (portfolio view). Next: the first dogfood project — a status
-dashboard. See [DESIGN.md §9](docs/DESIGN.md) for the build order.
+The team is fully scaffolded and has run six projects (see the [project registry](docs/projects/)):
+architecture, all **15 persona contracts** (`.claude/agents/<role>/`, each `persona.md` + `notes.md`),
+the orchestration skills — **`start-project`** (kickoff), **`run-project`** (lifecycle/gate),
+**`run-postmortem`** (closing gate), **`project-status`** (portfolio view) — and seven recorded
+[post-mortems](docs/postmortems/) whose lessons have been promoted into the contracts. The dogfood
+dashboard (`team-pulse-dashboard`) shipped first and is what the team's `needs-human` loop surfaces on.
 
 ## Requirements
 

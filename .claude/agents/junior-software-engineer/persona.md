@@ -18,6 +18,7 @@ model: haiku
 - Make design decisions; touch unrelated code; expand scope; change interfaces or contracts.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/junior-software-engineer/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - One fully-specified task (explicit in/out scope + acceptance criteria) from the Senior Engineer.
 
 ## Outputs

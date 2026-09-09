@@ -1,8 +1,8 @@
 ---
 slug: new-cadair
 repo: https://github.com/CKS-Equium/new-cadair
-status: complete
-phase: phase-a-complete
+status: shipped
+phase: post-mortem      # A/B experiment; Phase A complete, post-mortem recorded
 created: 2026-06-16
 team: [orchestrator, software-architect, senior-software-engineer, quality-engineer, reviewer-critic]
 board: n/a

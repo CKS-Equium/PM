@@ -19,6 +19,7 @@ model: opus
 - Change architecture without Architect sign-off; define requirements; own QA verification.
 
 ## Inputs
+- **Your playbook:** `.claude/agents/senior-software-engineer/notes.md` — read it before starting any task; it holds this role's accumulated lessons. Append to it freely as you learn (DESIGN §5).
 - Tickets (from Project Manager); ADRs/interface contracts; design specs.
 
 ## Outputs

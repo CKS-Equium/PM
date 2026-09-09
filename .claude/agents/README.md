@@ -33,5 +33,5 @@ New personas start from [`docs/templates/persona-template.md`](../../docs/templa
 `junior-software-engineer` · `quality-engineer` · `reviewer-critic` · `security-engineer` ·
 `ux-designer` · `ui-designer` · `devops-release-engineer` · `technical-writer`
 
-> All 15 personas exist (round 1), authored against [DESIGN.md](../../docs/DESIGN.md) §3, which
-> remains the summary view of every role's scope.
+> All 15 personas exist, authored against [DESIGN.md](../../docs/DESIGN.md) §3, which remains the
+> summary view of every role's scope. Every persona reads its own `notes.md` before starting work.
