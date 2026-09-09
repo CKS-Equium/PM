@@ -41,6 +41,13 @@ put the project repo that is outside this tree.
 
 ### Phase 2: Discovery interview → PRD
 
+> **Execution-mode kickoff:** if the operator arrives with an existing design **and** a gated dev
+> plan (DESIGN §7 "Execution mode"), skip the interview. The brief is the supplied design + plan:
+> read them, restate scope / gates / DoD / acceptance in one page, and take that to gate 1. Record
+> `mode: execution` and the plan path in the registry entry. If the project repo already exists,
+> skip Phase 5's creation step and just register + seed (Phase 6).
+
+
 Requirements discovery is the Product Manager's job — but a **subagent cannot hold a live,
 back-and-forth interview** with the human (subagents run autonomously and return a result). So the
 Orchestrator runs the **interview turn-by-turn in its own main thread** (asking the PM's discovery
@@ -63,10 +70,11 @@ that transcript**.
   (`slug`, `repo` placeholder, `status: proposed`, `phase: discovery`, `created`, `team:
   [orchestrator, product-manager]`) and the **Summary**.
 
-### Phase 4: Human gate — PRD approval (gate 1)
+### Phase 4: Human gate — brief approval (gate 1)
 
-Present the PRD summary + acceptance criteria for **human sign-off** (gate 1, `docs/gates.md`) —
-**before any repo is created**.
+Present the brief — PRD summary + acceptance criteria, or the restated design + plan in execution
+mode — for **human sign-off** (gate 1, `docs/gates.md`) — **before any repo is created**. This is
+one of only two human gates; the next is final acceptance (gate 6).
 
 - **Approved:** proceed to Phase 5. (The registry flips to `status: active` once the repo exists.)
 - **Changes requested:** keep `status: proposed`; the Product Manager revises and re-presents. No
@@ -131,6 +139,7 @@ git commit -m "chore: register project <slug>"
   Gate 1:   ✅ PRD approved
 
 Next: Software Architect (design phase) → run-project <slug>.
+      (execution mode: Build starts directly → run-project <slug>)
 ```
 
 ## Rules
@@ -164,6 +173,8 @@ Next: Software Architect (design phase) → run-project <slug>.
 - **No org access:** ask which org or personal account to use.
 - **Offline:** draft the PRD + registry entry locally; defer repo creation and note it in the entry.
 - **Human declines the PRD:** keep `status: proposed`; the Product Manager iterates. No repo exists yet.
+- **Operator supplies a design + dev plan:** execution-mode kickoff (Phase 2 note) — no interview,
+  gate 1 approves the restated brief, register `mode: execution`.
 - **Workspace dir missing:** create it (confirming it's outside this repo's tree).
 
 ## Configuration

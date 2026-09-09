@@ -22,15 +22,17 @@ and the project's registry entry `docs/projects/<slug>.md`.
 
 | Phase | Delegate to | Produces | Exit gate (DoD in gates.md) |
 |-------|-------------|----------|------------------------------|
-| Design | `software-architect` (ADRs, contracts, NFRs); `ux-designer` + `ui-designer` if there's a UI | ADRs, interface contracts, UX/UI specs | **Gate 2** 👤 architecture + design approved |
+| Design | `software-architect` (ADRs, contracts, NFRs); `ux-designer` + `ui-designer` if there's a UI | ADRs, interface contracts, UX/UI specs | **Gate 2** architecture + design reviewed; non-blocking `needs-human` FYI raised |
 | Plan | `project-manager` | Milestones + dependency-ordered tickets (GitHub Issues) | (part of gate 2) |
-| Build | `senior-software-engineer` (decomposes → `junior-software-engineer`) | Implemented features (PRs) | **Gate 3** all tickets built, self-reviewed |
+| Build | `senior-software-engineer` (decomposes → **you** fan out `junior-software-engineer` ×N → same Senior integrates) | Implemented features (PRs) | **Gate 3** all tickets built, self-reviewed |
 | Test | `quality-engineer` | Test plan + automated tests + results | **Gate 4** criteria verified, coverage met |
 | Review | `reviewer-critic` + `security-engineer` | Review verdicts, security findings | **Gate 5** no unresolved high-severity findings |
-| Release | `devops-release-engineer` (+ `technical-writer` for docs) | Release, changelog, docs | **Gate 6** 👤 CI green, deploy + rollback known |
+| Release | `devops-release-engineer` (+ `technical-writer` for docs) | Release, changelog, docs | **Gate 6** 👤 final acceptance: CI green, deploy + rollback known, operator path / playtest passed |
 | Post-mortem | `process-engineer` (via `run-postmortem`) | `docs/postmortems/<slug>.md` | **Gate 7** recommendations recorded & routed |
 
-👤 = human sign-off required (DESIGN §7).
+👤 = human sign-off required (DESIGN §7). There are exactly two: gate 1 (brief, handled by
+`start-project`) and gate 6 (final acceptance). Every other gate is verified by you against
+`docs/gates.md` with the Reviewer/Critic as the gate (BLOCK = fix-before-merge).
 
 ## Workflow
 
@@ -45,7 +47,14 @@ gh pr list --repo <org>/<slug>
 ```
 
 Determine the **current phase** (registry `phase:` + open issues/milestones) and the **next gate**
-to clear. Confirm gate 1 (PRD) is already approved; if not, this is a job for `start-project`.
+to clear. Confirm gate 1 (the brief) is already approved; if not, this is a job for `start-project`.
+
+**Execution mode?** If the registry entry records an operator-supplied design + gated dev plan
+(`mode: execution`, or the Decision log says so), Discovery and Design are already done: skip to
+Build and drive from the **project's own per-gate DoD** (`docs/DEV_PLAN.md` or equivalent) —
+branch + PR per plan gate, Reviewer/Critic as the gate, self-merge on green DoD, gate branches
+kept as checkpoints. Verify each plan gate's DoD **yourself** (build the full solution, run the
+verifier) — never take the engineer's word. Stop at plan-complete-needs-acceptance or a hard blocker.
 
 ### Phase 1: Delegate the current phase
 
@@ -61,6 +70,17 @@ return their narration text and you post it for them.** You (the Orchestrator) p
 **phase/gate-transition** comments on the relevant issues. Signal, not noise. This is what gives the
 dashboard a live story.
 
+**Build fan-out (DESIGN §4 "Delegation depth").** Subagents cannot spawn subagents, so the
+Senior → Junior chain runs through you:
+1. Invoke `senior-software-engineer` with the ticket. It either builds the ticket itself or, when
+   the ticket splits into **≥3 independent atomic tasks**, writes `docs/tasks/<ticket>.md` on the
+   branch and returns without building.
+2. Spawn one `junior-software-engineer` **per task, in parallel** (one message, multiple Task calls),
+   each given only its task spec + the contracts it names.
+3. Send the Juniors' results back to the **same** Senior agent (continue it — do not start a fresh
+   one) for integration, self-review, and the gate-3 checklist.
+Below the threshold, the Senior builds directly; do not fan out for the sake of it.
+
 ### Phase 2: Check the gate
 
 Verify the phase's **Definition of Done** in `docs/gates.md`.
@@ -68,17 +88,21 @@ Verify the phase's **Definition of Done** in `docs/gates.md`.
 - **Not met:** return the work to the **owning** phase with the specific gap. If the gap traces
   upstream (e.g. a Review finding rooted in a bad requirement), escalate to that earlier phase.
 
-### Phase 3: Human gate (if this is gate 2 or 6)
+### Phase 3: Human touchpoints (gate 2 FYI · gate 6 acceptance)
 
-**Raise it on the board first** so it surfaces in the dashboard's "Needs you" panel (no dashboard
-change needed — the panel already shows open `needs-human` issues): open a **`needs-human` issue in
-the project repo**, assigned to the operator, titled e.g. `🚦 Gate 2: approve architecture & design`,
-body = the summary + links to the artifacts being approved.
+Both surface on the dashboard's "Needs you" panel as **`needs-human` issues in the project repo**,
+assigned to the operator, body = summary + links to the artifacts.
 
-Then present the artifacts for **human sign-off** (architecture at gate 2; release at gate 6).
-- **Approved:** **close the gate issue** (clears it from "Needs you"), continue, and log the approval
-  in the registry's Decision log.
-- **Changes:** keep the gate issue open; return to the owning agent; re-present.
+- **Gate 2 — FYI, non-blocking.** Open `ℹ️ Gate 2: architecture & design (FYI)` with the ADR / spec
+  links, log it in the registry Decision log, and **proceed to Build without waiting**. If the
+  operator later objects in the issue, treat it as a scope change (return to the Architect,
+  re-baseline the plan). Close the issue when Build starts or the operator acknowledges.
+- **Gate 6 — final acceptance, blocking.** Open `🚦 Gate 6: final acceptance` with the release
+  candidate, the evidence record, and — for player-facing / operator-driven products — the exact
+  operator path or playtest to run. Wait.
+  - **Approved:** close the issue, release, log the approval in the Decision log.
+  - **Changes:** keep the issue open; return to the owning phase; fix-and-resubmit (never merge a
+    failed acceptance).
 
 ### Phase 4: Advance
 
@@ -99,7 +123,7 @@ is recorded.
 - Do phase work in this skill — always delegate to the owning agent.
 - Let an agent edit an artifact it doesn't own (enforce persona scopes).
 - Pass a gate with its DoD unmet, unless **consciously waived** with a reason logged in the registry.
-- Skip the human gates (architecture, release) or the post-mortem.
+- Skip the final-acceptance gate (gate 6) or the post-mortem; block on gate 2 (it is an FYI).
 - Push project code into the control-plane repo.
 
 ### Always:
@@ -112,7 +136,8 @@ is recorded.
 
 ### Prefer:
 - Small, verifiable increments over big-bang phases.
-- Escalating ambiguity to the human rather than guessing across a gate.
+- Escalating ambiguity to the human (as a `needs-human` issue) rather than guessing across a gate.
+- Continuing an existing agent over spawning a fresh one when the work needs its context.
 
 ## Edge Cases
 

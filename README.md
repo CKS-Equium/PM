@@ -22,7 +22,8 @@ docs along the way, and getting measurably better with every project.
 - **GitHub-native state.** Tickets are Issues, the board is a GitHub Project, phases are
   Milestones, handoffs are comments, deliveries are PRs.
 - **Gated, with humans at the big calls.** Explicit [gates](docs/gates.md) between phases; a human
-  signs off at PRD, architecture, and release only.
+  signs off at the brief and at final acceptance only. Architecture is surfaced for visibility, not
+  blocked on; in between, an adversarial reviewer is the gate on every PR.
 - **Recursive self-improvement.** Agents keep a `notes.md` playbook; a post-mortem (self-review +
   360 review) after every project feeds improvements back into the team — audited in git.
 

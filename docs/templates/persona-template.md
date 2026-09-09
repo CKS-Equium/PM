@@ -2,7 +2,7 @@
 name: <role-kebab-case>
 description: <one line — what this role does AND when it's invoked. Used for delegation routing.>
 tools: <comma-separated allowlist, e.g. Read, Grep, Glob, Write, Edit, Bash>
-model: <opus | sonnet | haiku>   # per DESIGN.md §8
+model: <fable | opus | sonnet | haiku>   # per DESIGN.md §8
 ---
 
 # <Role Name>
