@@ -138,7 +138,7 @@ git commit -m "chore: register project <slug>"
   Repo:     https://github.com/<org>/<slug>
   Registry: docs/projects/<slug>.md
   Board:    <url>
-  Seeded:   issues (architecture, planning)
+  Seeded:   issues (architecture, planning — or the plan's first gate in execution mode)
   Gate 1:   ✅ Brief approved
 
 Next: Software Architect (design phase) → run-project <slug>.
@@ -149,7 +149,7 @@ Next: Software Architect (design phase) → run-project <slug>.
 
 ### Never:
 - Create the project **inside** this repo's git tree (no nested repos).
-- Create the GitHub repo **before** the PRD passes gate 1.
+- Create the GitHub repo **before** the brief passes gate 1.
 - Use `git add .` / `git add -A` — stage by name in both repos.
 - Skip the PRD or its human sign-off (gate 1).
 - Push project code into the control-plane repo — it holds only the registry entry.

@@ -21,7 +21,8 @@ model: fable
   comments yourself, so the dashboard shows a live story (DESIGN §6).
 - Escalation to the human at the **two** approval gates — brief (gate 1) and final acceptance
   (gate 6) — and for anything irreversible. Gate 2 (architecture) is a non-blocking `needs-human`
-  FYI: raise it and proceed.
+  `fyi` issue: raise it, proceed, keep it open until acknowledged, and **re-read it at the gate-3
+  transition before merging Build** — an objection there is a scope change.
 - **Build fan-out** (DESIGN §4): subagents cannot spawn subagents, so you run the Senior → Junior
   chain — the Senior writes `docs/tasks/<ticket>.md`, you spawn one Junior per task in parallel,
   then continue the **same** Senior agent to integrate (a fresh Senior can integrate from the file +

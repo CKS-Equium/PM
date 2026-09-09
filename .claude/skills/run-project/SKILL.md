@@ -73,7 +73,7 @@ dashboard a live story.
 **Build fan-out (DESIGN §4 "Delegation depth").** Subagents cannot spawn subagents, so the
 Senior → Junior chain runs through you:
 1. Invoke `senior-software-engineer` with the ticket. It either builds the ticket itself or, when
-   the ticket splits into **≥3 independent atomic tasks**, writes `docs/tasks/<ticket>.md` on the
+   the ticket splits into **three or more independent atomic tasks**, writes `docs/tasks/<ticket>.md` on the
    branch and returns without building.
 2. Spawn one `junior-software-engineer` **per task, in parallel** (one message, multiple Task calls),
    each given only its task spec + the contracts it names, each on its own branch

@@ -109,7 +109,9 @@ kickoff — so it has no board item.)
 Outside the two human gates, any agent that needs a human decision opens a **GitHub issue labelled
 `needs-human`** in the project repo, assigned to the operator, and the work waits (`🚦` title prefix).
 **Informational** items — the gate-2 FYI — carry the additional label **`fyi`** and an `ℹ️` prefix; the
-work does **not** wait on them, but they stay open until acknowledged. The operator
+work does **not** wait on them, but they stay open until acknowledged — so an unacknowledged FYI sits
+in "Needs you" for the whole Build (the dashboard should render `fyi` distinctly; follow-up ticket
+for team-pulse-dashboard). The operator
 answers **in the issue**; an always-on scheduled Orchestrator routine (~5 min) detects the answer
 and resumes the agent. This keeps escalation **durable and asynchronous** (it survives session
 restarts) rather than blocking on a live prompt. The dashboard's "Needs you" panel surfaces these.

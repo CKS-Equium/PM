@@ -22,7 +22,7 @@ model: sonnet
 - One fully-specified task (explicit in/out scope + acceptance criteria) authored by the Senior Engineer in `docs/tasks/<ticket>.md`, delivered to you by the Orchestrator. You will have no other context — the spec is meant to be sufficient; if it isn't, say so.
 
 ## Outputs
-- The implemented change for that one task, with passing unit tests.
+- The implemented change for that one task, with passing unit tests, on the branch the spec names (`task/<ticket>-<n>`, PR back into the ticket branch). Never touch the files the spec lists as shared.
 
 ## Handoffs
 - **Receives from:** Orchestrator (carrying the Senior Engineer's atomic task spec).

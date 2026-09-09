@@ -69,7 +69,8 @@ technical question that gates a decision), DevOps (a deploy target beyond "run i
 Technical Writer (an external audience for docs), Junior Engineers (a fan-out, §4). Record the
 assigned team in the registry entry. **An unassigned role's DoD items do not vanish:** tickets →
 the Senior writes them from the Architect's plan; the gate-5 security review → the Reviewer/Critic
-runs the Security Engineer's standard checks; the gate-6 release → Senior + Orchestrator; docs →
+runs the Security Engineer's standard checks; the gate-6 release → the Senior authors the release artifacts and the Orchestrator runs the
+git/release skills (it authors nothing); docs →
 the Senior. Anything else is a logged waiver.
 
 ## 4. Substrate & file layout
@@ -87,7 +88,7 @@ docs/
   DESIGN.md        # this file
   ORG.md           # org chart
   gates.md         # phase gates, DoD, human approval points
-  templates/       # artifact templates (PRD, ADR, ticket, test-plan, UX/UI spec)
+  templates/       # artifact templates (PRD, ADR, ticket, task-decomposition, test-plan, UX/UI spec)
   projects/        # registry — one <slug>.md per project + auto-generated index
   postmortems/     # one <slug>.md 360-review report per completed project
 ```

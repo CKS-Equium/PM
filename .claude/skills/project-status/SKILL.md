@@ -45,7 +45,7 @@ the current phase (per `docs/gates.md`).
     Blocked: #12 awaiting API contract
 
 ▷ marketing-site       proposed  phase: discovery next: gate 1 (brief approval)
-    Repo: — · awaiting PRD sign-off
+    Repo: — · awaiting brief sign-off
 
 ✓ internal-dashboard   shipped   phase: release   post-mortem: recorded
     Repo: CKS-Equium/internal-dashboard

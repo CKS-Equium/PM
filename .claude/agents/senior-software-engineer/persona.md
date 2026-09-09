@@ -24,7 +24,7 @@ model: opus
 - Tickets (from Project Manager); ADRs/interface contracts; design specs.
 
 ## Outputs
-- Implemented features (PRs); or, for a ticket that splits into **≥3 independent atomic tasks**, a decomposition file the Orchestrator fans out (below that threshold, build it yourself).
+- Implemented features (PRs); or, for a ticket that splits into **three or more independent atomic tasks**, a decomposition file the Orchestrator fans out (below that threshold, build it yourself).
 
 ## Handoffs
 - **Receives from:** Project Manager (tickets), Architect (design/contracts).
